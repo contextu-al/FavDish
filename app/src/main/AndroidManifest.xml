@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tutorials.eu.favdish">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--
+For WRITE EXTERNAL STORAGE warning you can have a look at this article I hope it will clear your doubt.
+        https://www.raywenderlich.com/9577211-scoped-storage-in-android-10-getting-started
+    -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <application
+        android:name=".application.FavDishApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.FavDish">
+
+        <meta-data
+            android:name="com.pointzi.APP_KEY"
+            android:value="FavDish" />
+
+        <activity
+            android:name=".view.activities.DrawerActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:exported="false" />
+        <activity
+            android:exported="true"
+            android:name=".view.activities.SplashActivity"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.FavDish.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:exported="true"
+            android:name=".view.activities.MainActivity"
+            android:label="@string/app_name">
+            <nav-graph android:value="@navigation/mobile_navigation"/>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- If a user clicks on a shared link that uses the "http" scheme, your
+                     app should be able to delegate that traffic to "https". -->
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+
+                <!-- Include one or more domains that should be verified. -->
+                <data android:host="pointzi.dishapp.com" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:exported="false"
+            android:name=".view.activities.AddUpdateDishActivity"
+            android:configChanges="orientation"
+            android:label="Add Dish"
+            android:theme="@style/Theme.FavDish.NoActionBar" />
+    </application>
+
+</manifest>
