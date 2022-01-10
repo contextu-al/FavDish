@@ -1,7 +1,11 @@
 package com.tutorials.eu.favdish.view.activities
 
+import android.content.Intent
 import android.graphics.Point
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +16,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.*
+import com.karumi.dexter.Dexter
 import com.pointzi.BuildConfig
 import com.pointzi.Pointzi
 import com.tutorials.eu.favdish.R
@@ -20,6 +25,7 @@ import com.tutorials.eu.favdish.model.notification.NotifyWorker
 import com.tutorials.eu.favdish.utils.Constants
 import java.util.*
 import java.util.concurrent.TimeUnit
+import java.util.jar.Manifest
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +41,8 @@ class MainActivity : AppCompatActivity() {
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+
+        //requestDrawPermission()
 
         mNavController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
@@ -123,5 +131,14 @@ class MainActivity : AppCompatActivity() {
                 "FavDish Notify Work", ExistingPeriodicWorkPolicy.KEEP,
                 createWorkRequest()
             )
+    }
+
+    private fun requestDrawPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName"))
+                startActivityForResult(intent, 12345)
+            }
+        }
     }
 }

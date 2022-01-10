@@ -7,6 +7,13 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+
+def static getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyy-MM-dd')
+    return formattedDate
+}
+
 android {
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
@@ -16,7 +23,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 1
-        versionName "1.0"
+        versionName "1.0 - ${getDate()}"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

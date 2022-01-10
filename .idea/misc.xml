@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/layout/nav_header.xml" value="0.1" />
         <entry key="app/src/main/res/layout/toolbar.xml" value="0.1037037037037037" />
         <entry key="app/src/main/res/menu/drawer_item.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/drawer_toolbar_menu.xml" value="0.14814814814814814" />
         <entry key="app/src/main/res/menu/menu_all_dishes.xml" value="0.1" />
       </map>
     </option>

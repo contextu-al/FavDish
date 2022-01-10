@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -56,7 +57,6 @@ class DrawerActivity : AppCompatActivity() {
 
         mDrawer.addDrawerListener(drawerToggle)
     }
-
 
     // `onPostCreate` called when activity start-up is complete after `onStart()`
     // NOTE 1: Make sure to override the method with only a single `Bundle` argument
@@ -124,6 +124,17 @@ class DrawerActivity : AppCompatActivity() {
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true
         }
+        when(item.itemId) {
+            R.id.d_home -> {
+                finish()
+            }
+        }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.drawer_toolbar_menu, menu)
+        return true
     }
 }

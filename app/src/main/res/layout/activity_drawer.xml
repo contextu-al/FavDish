@@ -20,6 +20,7 @@
             android:fitsSystemWindows="true"
             app:title="Drawer Screen"
             app:titleTextColor="#fff"
+            app:menu="@menu/drawer_toolbar_menu"
             android:background="@color/primary_color" />
 
         <FrameLayout
