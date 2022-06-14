@@ -6,17 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".view.fragments.AllDishesFragment">
 
-    <TextView
-        android:id="@+id/tv_pz_installId"
+    <LinearLayout
+        android:id="@+id/pz_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_12sdp"
+        android:orientation="horizontal"
         android:gravity="center"
-        android:textSize="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/tv_pz_installId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:layout_weight="2"
+            android:layout_gravity="center_horizontal"
+            android:gravity="start" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/create_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/create_tag_button"
+            android:src="@drawable/ic_tag"
+            app:backgroundTint="#ffffff"
+            app:elevation="0dp"
+            app:fabSize="mini" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_dishes_list"
@@ -26,7 +45,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/pz_section" />
 
     <TextView
         android:id="@+id/tv_no_dishes_added_yet"

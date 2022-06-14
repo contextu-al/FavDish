@@ -19,6 +19,7 @@ import com.tutorials.eu.favdish.databinding.FragmentAllDishesBinding
 import com.tutorials.eu.favdish.model.entities.FavDish
 import com.tutorials.eu.favdish.utils.Constants
 import com.tutorials.eu.favdish.view.activities.AddUpdateDishActivity
+import com.tutorials.eu.favdish.view.activities.CreateTagActivity
 import com.tutorials.eu.favdish.view.activities.DrawerActivity
 import com.tutorials.eu.favdish.view.activities.MainActivity
 import com.tutorials.eu.favdish.view.adapters.CustomListItemAdapter
@@ -71,6 +72,10 @@ class AllDishesFragment : Fragment() {
 
 
         mBinding.tvPzInstallId.text = "Install Id: ${Pointzi.state.user.install.id}"
+
+        mBinding.createTag.setOnClickListener {
+            startActivity(Intent(activity, CreateTagActivity::class.java))
+        }
 
         /**
          * Add an observer on the LiveData returned by getAllDishesList.

@@ -3,18 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/drawable/ic_enter.xml" value="0.17962962962962964" />
-        <entry key="app/src/main/res/layout/activity_add_update_dish.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_drawer.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/fragment_all_dishes.xml" value="0.12037037037037036" />
-        <entry key="app/src/main/res/layout/fragment_first_drawer.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/fragment_second_drawer.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_third_drawer.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/nav_header.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/toolbar.xml" value="0.1037037037037037" />
-        <entry key="app/src/main/res/menu/drawer_item.xml" value="0.1" />
-        <entry key="app/src/main/res/menu/drawer_toolbar_menu.xml" value="0.14814814814814814" />
-        <entry key="app/src/main/res/menu/menu_all_dishes.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_tag.xml" value="0.2535" />
+        <entry key="app/src/main/res/layout/activity_create_tag.xml" value="0.35260416666666666" />
+        <entry key="app/src/main/res/layout/fragment_all_dishes.xml" value="0.4508933738425926" />
       </map>
     </option>
   </component>

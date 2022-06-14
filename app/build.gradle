@@ -54,6 +54,8 @@ android {
 
 dependencies {
 
+    implementation project(path: ':pointzi-sdk-android')
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
@@ -72,7 +74,7 @@ dependencies {
     // For more detail visit the link: https://github.com/bumptech/glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation "com.pointzi.dev:pointzi:2.4.171"
+
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     // Room components

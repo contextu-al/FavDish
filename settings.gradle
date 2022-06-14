@@ -1,2 +1,3 @@
 include ':app'
+include ':pointzi-sdk-android'
 rootProject.name = "FavDish"
