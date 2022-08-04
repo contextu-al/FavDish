@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
 
         Pointzi.setUserId("fav-dish-user ${Date()} | pz-dev-${BuildConfig.PZ_VERSION_NAME}")
-        Pointzi.tagDate("session",Date())
+        //Pointzi.tagDate("session",Date())
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
