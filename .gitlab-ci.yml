@@ -19,14 +19,14 @@ build-prod:
   only:
     - prod
   script:
-    - ./gradle assembleDebug
+    - ./gradlew assembleDebug
 
 build-dev:
   stage: build
   only:
     - dev
   script:
-    - ./gradle assembleDebug
+    - ./gradlew assembleDebug
 
 
 dev-deploy:
