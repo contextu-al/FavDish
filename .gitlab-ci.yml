@@ -1,0 +1,56 @@
+image: jangrewe/gitlab-ci-android
+
+cache:
+  key: ${CI_PROJECT_ID}
+  paths:
+    - .gradle/
+
+before_script:
+  - export GRADLE_USER_HOME=$(pwd)/.gradle
+  - chmod += ./gradle
+
+stages:
+  - build
+  - deploy
+
+
+build-prod:
+  stage: build
+  only:
+    - prod
+  script:
+    - ./gradle assembleDebug
+
+build-dev:
+  stage: build
+  only:
+    - dev
+  script:
+    - ./gradle assembleDebug
+
+
+dev-deploy:
+  stage: deploy
+  only:
+    - dev
+  script:
+    - appcenter distribute release
+      --group Collaborators
+      --file "app/build/outputs/apk/debug/app-debug.apk"
+      --release-notes 'Bison server with dev version of sdk'
+      --app "Pointzi/FavDish-Dev-Bison-FavDish"
+      --token "${APP_CENTER_TOKEN}"
+      --quiet
+
+prod-deploy:
+  stage: deploy
+  only:
+    - prod
+  script:
+    - appcenter distribute release
+      --group Collaborators
+      --file "app/build/outputs/apk/debug/app-debug.apk"
+      --release-notes 'Bison server with Prod version of sdk'
+      --app "Pointzi/FavDish-Prod-Bison-FavDish"
+      --token "${APP_CENTER_TOKEN}"
+      --quiet
