@@ -9,9 +9,7 @@ before_script:
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - chmod +x ./gradlew
   - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.3/install.sh | bash
-  - exec bash -l
   - nvm install node
-  - exec bash -l
   - npm install -g appcenter-cli
 
 stages:
