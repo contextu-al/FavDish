@@ -8,13 +8,10 @@ cache:
 before_script:
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - chmod +x ./gradlew
-  - hostnamectl
-  - apt install npm
 
 stages:
   - build
   - deploy
-
 
 build-prod:
   stage: build
@@ -35,8 +32,8 @@ dev-deploy:
   stage: deploy
   only:
     - dev
+  image: vagsa2/appcenter-cli
   script:
-    - npm install -g appcenter-cli
     - appcenter distribute release
       --group Collaborators
       --file "app/build/outputs/apk/debug/app-debug.apk"
