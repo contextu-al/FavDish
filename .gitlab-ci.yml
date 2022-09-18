@@ -19,6 +19,9 @@ build-prod:
     - prod
   script:
     - ./gradlew assembleDebug
+  artifacts:
+    paths:
+      - app/build/outputs/apk/debug/app-debug.apk
 
 build-dev:
   stage: build
@@ -51,11 +54,12 @@ prod-deploy:
   stage: deploy
   only:
     - prod
+  image: vagsa2/appcenter-cli
   script:
     - appcenter distribute release
+      --token $APPCENTER_ACCESS_TOKEN
       --group Collaborators
       --file "app/build/outputs/apk/debug/app-debug.apk"
       --release-notes 'Bison server with Prod version of sdk'
       --app "Pointzi/FavDish-Prod-Bison-FavDish"
-      --token "${APP_CENTER_TOKEN}"
       --quiet
