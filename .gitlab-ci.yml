@@ -35,7 +35,7 @@ dev-deploy:
   only:
     - dev
   script:
-    - nvm install node
+    - /root/.nvm install node
     - npm install -g appcenter-cli
     - appcenter distribute release
       --group Collaborators
