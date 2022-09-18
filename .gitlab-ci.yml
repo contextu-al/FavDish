@@ -34,8 +34,8 @@ dev-deploy:
     - dev
   image: vagsa2/appcenter-cli
   script:
-    - appcenter login --token "${APP_CENTER_TOKEN}"
     - appcenter distribute release
+      --token "$APPCENTER_ACCESS_TOKEN"
       --group Collaborators
       --file "app/build/outputs/apk/debug/app-debug.apk"
       --release-notes 'Bison server with dev version of sdk'
