@@ -11,29 +11,51 @@ before_script:
 
 stages:
   - build
+  - deploy
+
 build-prod:
   stage: build
   only:
-    - dev
+    - prod
   script:
     - ./gradlew assembleDebug
-    - appcenter distribute release
-      --token $APPCENTER_ACCESS_TOKEN
-      --group Collaborators
-      --file "app/build/outputs/apk/debug/app-debug.apk"
-      --release-notes 'Bison server with dev version of sdk'
-      --app "Pointzi/FavDish-Prod-Bison-FavDish"
-      --quiet
+
 build-dev:
   stage: build
   only:
     - dev
   script:
     - ./gradlew assembleDebug
+  artifacts:
+    paths:
+      - app/build/outputs/apk/debug/app-debug.apk
+
+
+dev-deploy:
+  stage: deploy
+  only:
+    - dev
+  image: vagsa2/appcenter-cli
+  dependencies:
+    - build-dev
+  script:
     - appcenter distribute release
       --token $APPCENTER_ACCESS_TOKEN
       --group Collaborators
       --file "app/build/outputs/apk/debug/app-debug.apk"
       --release-notes 'Bison server with dev version of sdk'
       --app "Pointzi/FavDish-Dev-Bison-FavDish"
+      --quiet
+
+prod-deploy:
+  stage: deploy
+  only:
+    - prod
+  script:
+    - appcenter distribute release
+      --group Collaborators
+      --file "app/build/outputs/apk/debug/app-debug.apk"
+      --release-notes 'Bison server with Prod version of sdk'
+      --app "Pointzi/FavDish-Prod-Bison-FavDish"
+      --token "${APP_CENTER_TOKEN}"
       --quiet
