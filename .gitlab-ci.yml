@@ -8,6 +8,7 @@ cache:
 before_script:
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - chmod +x ./gradlew
+  - hostnamectl
   - apt install npm
 
 stages:
