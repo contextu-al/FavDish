@@ -19,6 +19,7 @@ import androidx.work.*
 import com.karumi.dexter.Dexter
 import com.pointzi.BuildConfig
 import com.pointzi.Pointzi
+import com.pointzi.debug.LogLevel
 import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.databinding.ActivityMainBinding
 import com.tutorials.eu.favdish.model.notification.NotifyWorker
@@ -35,7 +36,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         Pointzi.setUserId("fav-dish-user ${Date()} | pz-dev-${BuildConfig.PZ_VERSION_NAME}")
         //Pointzi.tagDate("session",Date())

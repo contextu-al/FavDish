@@ -1,6 +1,5 @@
 package com.tutorials.eu.favdish.model.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.tutorials.eu.favdish.model.entities.FavDish
 import kotlinx.coroutines.flow.Flow
@@ -39,7 +38,6 @@ interface FavDishDao {
      */
     @Query("SELECT * FROM FAV_DISHES_TABLE ORDER BY ID")
     fun getAllDishesList(): Flow<List<FavDish>>
-
 
     /**
      * A function to update favorite dish details to the local database using Room.
