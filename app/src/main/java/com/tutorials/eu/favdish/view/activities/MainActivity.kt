@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Pointzi.setUserId("fav-dish-user ${Date()} | pz-dev-${BuildConfig.PZ_VERSION_NAME}")
+        Pointzi.setUserId("fav-dish-user ${Date()} | pz-prod-${BuildConfig.PZ_VERSION_NAME}")
         //Pointzi.tagDate("session",Date())
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
