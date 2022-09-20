@@ -51,7 +51,7 @@ staging-deploy:
     - staging
   image: vagsa2/appcenter-cli
   dependencies:
-    - build-dev
+    - build-staging
   script:
     - appcenter distribute release
       --token $APPCENTER_ACCESS_TOKEN
