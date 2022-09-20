@@ -34,6 +34,34 @@ build-dev:
       - app/build/outputs/apk/debug/app-debug.apk
 
 
+build-staging:
+  stage: build
+  only:
+    - staging
+  script:
+    - ./gradlew assembleDebug
+  artifacts:
+    paths:
+      - app/build/outputs/apk/debug/app-debug.apk
+
+
+staging-deploy:
+  stage: deploy
+  only:
+    - staging
+  image: vagsa2/appcenter-cli
+  dependencies:
+    - build-dev
+  script:
+    - appcenter distribute release
+      --token $APPCENTER_ACCESS_TOKEN
+      --group Collaborators
+      --file "app/build/outputs/apk/debug/app-debug.apk"
+      --release-notes 'Bison server with dev version of sdk'
+      --app "Contextual/FavDish-DevSDK-Staging-FavDish_staging"
+      --quiet
+
+
 dev-deploy:
   stage: deploy
   only:
@@ -47,7 +75,7 @@ dev-deploy:
       --group Collaborators
       --file "app/build/outputs/apk/debug/app-debug.apk"
       --release-notes 'Bison server with dev version of sdk'
-      --app "Pointzi/FavDish-Dev-Bison-FavDish"
+      --app "Contextual/FavDish-DevSDK-Prod-FavDish"
       --quiet
 
 prod-deploy:
@@ -61,5 +89,5 @@ prod-deploy:
       --group Collaborators
       --file "app/build/outputs/apk/debug/app-debug.apk"
       --release-notes 'Bison server with Prod version of sdk'
-      --app "Pointzi/FavDish-Prod-Bison-FavDish"
+      --app "Contextual/FavDish-ProdSDK-Prod-FavDish"
       --quiet
