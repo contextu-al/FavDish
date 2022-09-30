@@ -37,14 +37,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Pointzi.setUserId("favdish-staging-user ${Date()} | pz-${BuildConfig.PZ_VERSION_NAME}")
+        Pointzi.setUserId("favdish-dev-user ${Date()} | pz-${BuildConfig.PZ_VERSION_NAME}")
         //Pointzi.tagDate("session",Date())
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
         //requestDrawPermission()
-
         mNavController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -68,7 +67,6 @@ class MainActivity : AppCompatActivity() {
             mBinding.navView.selectedItemId = R.id.navigation_random_dish
         }
         // END
-
         startWork()
     }
 
@@ -124,7 +122,6 @@ class MainActivity : AppCompatActivity() {
         .build()
 
     private fun startWork() {
-
         /* enqueue a work, ExistingPeriodicWorkPolicy.KEEP means that if this work already exists, it will be kept
         if the value is ExistingPeriodicWorkPolicy.REPLACE, then the work will be replaced */
         WorkManager.getInstance(this)

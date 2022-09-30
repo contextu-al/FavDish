@@ -28,7 +28,7 @@ For WRITE EXTERNAL STORAGE warning you can have a look at this article I hope it
 
         <meta-data
             android:name="com.pointzi.APP_KEY"
-            android:value="FavDish_staging" />
+            android:value="FavDish" />
 
         <activity
             android:name=".view.activities.DrawerActivity"

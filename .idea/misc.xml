@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/layout/button_layout_single.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_tag.xml" value="0.2535" />
         <entry key="app/src/main/res/layout/activity_create_tag.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/layout/fragment_all_dishes.xml" value="0.4508933738425926" />
