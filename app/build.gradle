@@ -54,7 +54,7 @@ android {
 dependencies {
     implementation project(path: ':pointzi-sdk-android')
 
-    //implementation "com.pointzi.dev:pointzi:2+"
+    //implementation "com.pointzi.dev:pointzi:2.5.16"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.7.0'
