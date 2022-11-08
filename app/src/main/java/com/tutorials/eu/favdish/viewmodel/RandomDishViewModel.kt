@@ -18,13 +18,17 @@ class RandomDishViewModel : ViewModel() {
      * offers time complexity for add(Disposable), remove(Disposable) and delete(Disposable)
      * operations.
      */
+
     private val compositeDisposable = CompositeDisposable()
 
     /**
      * Creates a MutableLiveData with no value assigned to it.
      */
+
     val loadRandomDish = MutableLiveData<Boolean>()
+
     val randomDishResponse = MutableLiveData<RandomDish.Recipes>()
+
     val randomDishLoadingError = MutableLiveData<Boolean>()
 
     fun getRandomDishFromAPI() {
@@ -59,7 +63,7 @@ class RandomDishViewModel : ViewModel() {
                     override fun onSuccess(value: RandomDish.Recipes?) {
                         // Update the values with response in the success method.
                         loadRandomDish.value = false
-                        randomDishResponse.value = value
+                        randomDishResponse.value = value!!
                         randomDishLoadingError.value = false
                     }
 
