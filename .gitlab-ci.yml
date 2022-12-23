@@ -1,93 +1,17 @@
-image: jangrewe/gitlab-ci-android
-
-cache:
-  key: ${CI_PROJECT_ID}
-  paths:
-    - .gradle/
-
-before_script:
-  - export GRADLE_USER_HOME=$(pwd)/.gradle
-  - chmod +x ./gradlew
+variables:
+  ANDROID_COMPILE_SDK: "30"
+  ANDROID_BUILD_TOOLS: "30.0.2"
+  ANDROID_SDK_TOOLS:   "latest"
+  COMMAND_LINE_TOOLS: "7583922"
+  GIT_SUBMODULE_STRATEGY: recursive
+  BUILD_TYPE: release
 
 stages:
   - build
-  - deploy
 
-build-prod:
+build_project:
   stage: build
-  only:
-    - prod
   script:
-    - ./gradlew assembleDebug
-  artifacts:
-    paths:
-      - app/build/outputs/apk/debug/app-debug.apk
-
-build-dev:
-  stage: build
-  only:
-    - dev
-  script:
-    - ./gradlew assembleDebug
-  artifacts:
-    paths:
-      - app/build/outputs/apk/debug/app-debug.apk
-
-
-build-staging:
-  stage: build
-  only:
-    - staging
-  script:
-    - ./gradlew assembleDebug
-  artifacts:
-    paths:
-      - app/build/outputs/apk/debug/app-debug.apk
-
-
-staging-deploy:
-  stage: deploy
-  only:
-    - staging
-  image: vagsa2/appcenter-cli
-  dependencies:
-    - build-staging
-  script:
-    - appcenter distribute release
-      --token $APPCENTER_ACCESS_TOKEN
-      --group Collaborators
-      --file "app/build/outputs/apk/debug/app-debug.apk"
-      --release-notes 'Bison server with dev version of sdk'
-      --app "Contextual/FavDish-DevSDK-Staging-FavDish_staging"
-      --quiet
-
-
-dev-deploy:
-  stage: deploy
-  only:
-    - dev
-  image: vagsa2/appcenter-cli
-  dependencies:
-    - build-dev
-  script:
-    - appcenter distribute release
-      --token $APPCENTER_ACCESS_TOKEN
-      --group Collaborators
-      --file "app/build/outputs/apk/debug/app-debug.apk"
-      --release-notes 'Bison server with dev version of sdk'
-      --app "Contextual/FavDish-DevSDK-Prod-FavDish"
-      --quiet
-
-prod-deploy:
-  stage: deploy
-  only:
-    - prod
-  image: vagsa2/appcenter-cli
-  script:
-    - appcenter distribute release
-      --token $APPCENTER_ACCESS_TOKEN
-      --group Collaborators
-      --file "app/build/outputs/apk/debug/app-debug.apk"
-      --release-notes 'Bison server with Prod version of sdk'
-      --app "Contextual/FavDish-ProdSDK-Prod-FavDish"
-      --quiet
+    - sh -x build.sh
+  tags:
+    - android
