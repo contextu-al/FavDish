@@ -22,7 +22,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 1
-        versionName "1.0"
+        versionName "1.0 - ${getDate()}"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -52,9 +52,7 @@ android {
 }
 
 dependencies {
-    //implementation project(path: ':pointzi-sdk-android')
-
-    implementation "com.pointzi.dev:pointzi:2+"
+    implementation (group: "com.pointzi.dev", name: "pointzi", version: "2.+")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.7.0'
