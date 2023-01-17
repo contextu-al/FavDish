@@ -40,7 +40,7 @@ LOWERCASE_SDK_ENV=$( tr '[A-Z]' '[a-z]' <<< $SDK_ENV)
 
 echo "===== Build FavDish .apk for AppCenter ====="
 ./gradlew app:dependencies
-#./gradlew assembleDebug
+./gradlew assembleDebug
 
 echo "===== Uploading .apk to AppCenter ====="
-#appcenter distribute release --app Contextual/FavDish-"$SDK_ENV"SDK-"$APP_ENV"-"$APP_KEY" --file "app/build/outputs/apk/debug/app-debug.apk" --group "Collaborators"
+appcenter distribute release --app Contextual/FavDish-"$SDK_ENV"SDK-"$APP_ENV"-"$APP_KEY" --file "app/build/outputs/apk/debug/app-debug.apk" --group "Collaborators"
