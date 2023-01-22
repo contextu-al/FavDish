@@ -9,6 +9,13 @@ variables:
 stages:
   - build
 
+dev:build:
+  stage: build
+  script:
+    - sh -x build.sh
+  tags:
+    - android
+
 build_project:
   stage: build
   script:
