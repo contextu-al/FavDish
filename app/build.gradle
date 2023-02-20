@@ -14,15 +14,16 @@ def static getDate() {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "pointzi.dishapp"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0 - ${getDate()}"
+        manifestPlaceholders += [app_key: "FavDish"]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -49,10 +50,35 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    productFlavors {
+        dev {
+            flavorDimensions "dev"
+            resValue "string", "app_key", "FavDish"
+        }
+
+        prod {
+            flavorDimensions "prod"
+            resValue "string", "app_key", "FavDish"
+        }
+
+        staging {
+            flavorDimensions "staging"
+            resValue "string", "app_key", "FavDish_staging"
+        }
+    }
+
 }
 
 dependencies {
-    implementation (group: "com.pointzi.dev", name: "pointzi", version: "2.+")
+
+    if(getCurrentFlavor().toLowerCase().contains("debug")){
+        implementation project(":contextual")
+    } else if(getCurrentFlavor().toLowerCase().contains("release")){
+        implementation (group: "com.pointzi", name: "pointzi", version: "2.+")
+    } else {
+        implementation (group: "com.pointzi.dev", name: "pointzi", version: "2.+")
+    }
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -108,4 +134,18 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+// https://stackoverflow.com/questions/30621183/how-to-get-current-flavor-in-gradle
+def getCurrentFlavor() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+
+    if( tskReqStr.contains( "prod" ) ){
+        return "prod"
+    } else if( tskReqStr.contains("dev") ){
+        return "dev"
+    } else {
+        return "staging"
+    }
 }

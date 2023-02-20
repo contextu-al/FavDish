@@ -17,6 +17,7 @@ echo "===== Setting Default Environment Variables ======"
 APP_ENV="Prod"
 APP_KEY="FavDish"
 SDK_ENV="Dev"
+APK_LOCATION=""
 
 GIT_VERSION=$(git log -1 --format="%h")
 BUILD_TIME=$(date)
@@ -26,12 +27,17 @@ BUILD_TIME=$(date)
 if [ "$GIT_BRANCH" = "staging" ]; then 
   APP_ENV="Staging"
   APP_KEY="FavDish_staging"
-  sed -i '' 's:"FavDish":"FavDish_staging":1' app/src/main/AndroidManifest.xml
+  ./gradlew assembleStagingDebug
+  APK_LOCATION=app/build/outputs/apk/staging/debug/app-staging-debug.apk
 # Production
 elif [ "$GIT_BRANCH" = "main" ]; then
   SDK_ENV='Prod'
-  # Update the build.gradle to point to the prod version of the SDK
-  sed -i '' 's:com.pointzi.dev\::com.pointzi\::1' app/build.gradle
+  ./gradlew assembleProdDebug
+  APK_LOCATION=app/build/outputs/apk/prod/debug/app-prod-debug.apk
+elif [ "$GIT_BRANCH" = "develop" ]; then
+  SDK_ENV='Dev'
+  ./gradlew assembleProdDebug
+  APK_LOCATION=app/build/outputs/apk/prod/debug/app-prod-debug.apk
 fi
 
 # We use lowercase variables as part of the Artifactory BDD path below
@@ -44,4 +50,4 @@ echo "===== Build FavDish .apk for AppCenter ====="
 ./gradlew assembleDebug
 
 echo "===== Uploading .apk to AppCenter ====="
-appcenter distribute release --app Contextual/FavDish-"$SDK_ENV"SDK-"$APP_ENV"-"$APP_KEY" --file "app/build/outputs/apk/debug/app-debug.apk" --group "Collaborators"
+appcenter distribute release --app Contextual/FavDish-"$SDK_ENV"SDK-"$APP_ENV"-"$APP_KEY" --file "$APP_KEY" --group "Collaborators"
