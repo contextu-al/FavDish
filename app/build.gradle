@@ -52,7 +52,11 @@ android {
     }
 
     productFlavors {
-        dev {
+        continuousIntegration {
+            flavorDimensions "ci"
+            resValue "string", "app_key", "FavDish"
+        }
+        localDev {
             flavorDimensions "dev"
             resValue "string", "app_key", "FavDish"
         }
@@ -66,6 +70,7 @@ android {
             flavorDimensions "staging"
             resValue "string", "app_key", "FavDish_staging"
         }
+
     }
 
 }
