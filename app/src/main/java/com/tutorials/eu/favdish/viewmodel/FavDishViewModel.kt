@@ -70,7 +70,7 @@ class FavDishViewModel(private val repository: FavDishRepository) : ViewModel() 
  * you'll always get the right instance of the FavDishViewModel class.
  */
 class FavDishViewModelFactory(private val repository: FavDishRepository) :
-    ViewModelProvider.Factory {
+    ViewModelProvider.AndroidViewModelFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(FavDishViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
