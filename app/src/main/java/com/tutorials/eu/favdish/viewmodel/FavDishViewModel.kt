@@ -1,5 +1,6 @@
 package com.tutorials.eu.favdish.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.*
 import com.tutorials.eu.favdish.model.database.FavDishRepository
 import com.tutorials.eu.favdish.model.entities.FavDish
@@ -69,8 +70,8 @@ class FavDishViewModel(private val repository: FavDishRepository) : ViewModel() 
  * It will survive configuration changes and even if the Activity is recreated,
  * you'll always get the right instance of the FavDishViewModel class.
  */
-class FavDishViewModelFactory(private val repository: FavDishRepository) :
-    ViewModelProvider.AndroidViewModelFactory() {
+class FavDishViewModelFactory(private val repository: FavDishRepository, private val application: Application) :
+    ViewModelProvider.AndroidViewModelFactory(application) {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(FavDishViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

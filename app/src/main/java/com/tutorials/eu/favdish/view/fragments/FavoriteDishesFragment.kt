@@ -25,7 +25,7 @@ class FavoriteDishesFragment : Fragment() {
      * This is constructed based on the repository retrieved from the FavDishApplication.
      */
     private val mFavDishViewModel: FavDishViewModel by viewModels {
-        FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
+        FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository, requireActivity().application)
     }
 
     override fun onCreateView(
