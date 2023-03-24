@@ -1,3 +1,9 @@
+# Contextual
+
+https://contextu.al/
+
+![Main View](https://contextu.al/wp-content/uploads/2022/01/Contextual-icon-560x285.png)
+[![Twitter](https://img.shields.io/badge/Twitter-%40contextu_al-blue.svg)](https://twitter.com/contextu_al)
 
 # FavDish
 Native android sample app developed by the contextual android team, used in testing sdk features,
