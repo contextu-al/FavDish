@@ -1,5 +1,25 @@
 #!/bin/sh -x
 
+# If user has set CONTEXTUAL_SDK_VERSION in environment, it will be used.
+if [ "$CONTEXTUAL_SDK_VERSION" ]; then
+    echo "VERSION_NAME=${CONTEXTUAL_SDK_VERSION}" >> local.properties
+    echo "Building ${CONTEXTUAL_SDK_VERSION} of SDK"
+fi
+
+
+# Invoked from upstream SDK pipeline.
+if [ "$UPSTREAM_VERSION_NAME" ]; then
+   git clone https://gitlab.com/contextual/sdks/android/contextual-sdk-android
+   cd contextual-sdk-android
+   git checkout $UPSTREAM_VERSION_NAME
+   CONTEXTUAL_SDK_TAG=$(git describe --tags --abbrev=0)
+   UPSTREAM_VERSION_GIT_HASH=-${UPSTREAM_VERSION_NAME}
+   UPSTREAM_VERSION=${CONTEXTUAL_SDK_TAG}${UPSTREAM_VERSION_GIT_HASH}
+   cd ..
+   echo "VERSION_NAME=${UPSTREAM_VERSION}" >> local.properties
+   echo "Building ${UPSTREAM_VERSION} of SDK"
+fi
+
 echo "===== Ensuring correct language encoding and paths on build machine ====="
 source ~/.profile
 
@@ -17,30 +37,36 @@ echo "===== Setting Default Environment Variables ======"
 APP_ENV="Prod"
 APP_KEY="FavDish"
 SDK_ENV="Dev"
+APK_LOCATION=""
 
 GIT_VERSION=$(git log -1 --format="%h")
 BUILD_TIME=$(date)
+
+if [ ! -f local.properties ]; then
+  touch local.properties
+fi
 
 # Default is Develop using above environment variables
 # Staging
 if [ "$GIT_BRANCH" = "staging" ]; then 
   APP_ENV="Staging"
   APP_KEY="FavDish_staging"
-  sed -i '' 's:"FavDish":"FavDish_staging":1' app/src/main/AndroidManifest.xml
+  ./gradlew assembleStagingDebug
+  APK_LOCATION=app/build/outputs/apk/staging/debug/app-staging-debug.apk
 # Production
 elif [ "$GIT_BRANCH" = "main" ]; then
   SDK_ENV='Prod'
-  # Update the build.gradle to point to the prod version of the SDK
-  sed -i '' 's:com.pointzi.dev\::com.pointzi\::1' app/build.gradle
+  ./gradlew assembleProdDebug
+  APK_LOCATION=app/build/outputs/apk/prod/debug/app-prod-debug.apk
+elif [ "$GIT_BRANCH" = "develop" ]; then
+  SDK_ENV='Dev'
+  ./gradlew assembleContinuousIntegrationDebug
+  APK_LOCATION=app/build/outputs/apk/continuousIntegration/debug/app-continuousIntegration-debug.apk
 fi
 
 # We use lowercase variables as part of the Artifactory BDD path below
 LOWERCASE_APP_ENV=$( tr '[A-Z]' '[a-z]' <<< $APP_ENV)
 LOWERCASE_SDK_ENV=$( tr '[A-Z]' '[a-z]' <<< $SDK_ENV)
 
-echo "===== Build FavDish .apk for AppCenter ====="
-./gradlew app:dependencies
-./gradlew assembleDebug
-
 echo "===== Uploading .apk to AppCenter ====="
-appcenter distribute release --app Contextual/FavDish-"$SDK_ENV"SDK-"$APP_ENV"-"$APP_KEY" --file "app/build/outputs/apk/debug/app-debug.apk" --group "Collaborators"
+appcenter distribute release --app Contextual/FavDish-"$SDK_ENV"SDK-"$APP_ENV"-"$APP_KEY" --file "$APK_LOCATION" --group "Collaborators"

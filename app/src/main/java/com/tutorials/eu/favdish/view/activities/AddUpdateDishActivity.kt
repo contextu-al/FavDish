@@ -74,7 +74,7 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
      * This is constructed based on the repository retrieved from the FavDishApplication.
      */
     private val mFavDishViewModel: FavDishViewModel by viewModels {
-        FavDishViewModelFactory((application as FavDishApplication).repository)
+        FavDishViewModelFactory((application as FavDishApplication).repository, application)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

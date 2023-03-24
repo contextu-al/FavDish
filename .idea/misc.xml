@@ -3,6 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/drawable/alert.xml" value="0.1" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/drawable/backup.xml" value="0.1" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/drawable/camera.xml" value="0.1" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/drawable/check_circle.xml" value="0.1" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/drawable/cloud_off.xml" value="0.1" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/drawable/developer_mode.xml" value="0.1" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/drawable/exit_to_app.xml" value="0.1" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/drawable/link_off.xml" value="0.1" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/drawable/pause.xml" value="0.1" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/drawable/play_arrow.xml" value="0.1" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/drawable/refresh.xml" value="0.1" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/drawable/sync.xml" value="0.1" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/drawable/sync_problem.xml" value="0.1" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/drawable/system_update.xml" value="0.1" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/layout/button_layout_single.xml" value="0.1" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/layout/preview_mode_fab.xml" value="0.1334853090172239" />
+        <entry key="..\:/Streethawk/favdish/pointzi-sdk-android/src/main/res/layout/preview_mode_menu_item.xml" value="0.14945652173913043" />
         <entry key="app/src/main/res/drawable/ic_tag.xml" value="0.2535" />
         <entry key="app/src/main/res/layout/activity_create_tag.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/layout/fragment_all_dishes.xml" value="0.4508933738425926" />

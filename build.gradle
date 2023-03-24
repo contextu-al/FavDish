@@ -3,7 +3,7 @@ buildscript {
     ext.kotlin_version = "1.4.21"
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url 'https://jitpack.io' }
     }
     dependencies {
@@ -20,10 +20,10 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
-        jcenter()
-        maven { url 'https://jitpack.io' }
         maven { url "https://repo.pointzi.com/sdk/pointzi/" }
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 

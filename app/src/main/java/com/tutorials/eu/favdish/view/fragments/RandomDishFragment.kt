@@ -197,7 +197,7 @@ class RandomDishFragment : Fragment() {
                 )
 
                 val mFavDishViewModel: FavDishViewModel by viewModels {
-                    FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
+                    FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository, requireActivity().application)
                 }
 
                 mFavDishViewModel.insert(randomDishDetails)

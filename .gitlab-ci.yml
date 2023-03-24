@@ -1,15 +1,7 @@
-variables:
-  ANDROID_COMPILE_SDK: "30"
-  ANDROID_BUILD_TOOLS: "30.0.2"
-  ANDROID_SDK_TOOLS:   "latest"
-  COMMAND_LINE_TOOLS: "7583922"
-  GIT_SUBMODULE_STRATEGY: recursive
-  BUILD_TYPE: release
-
 stages:
   - build
 
-build_project:
+dev:build:
   stage: build
   script:
     - sh -x build.sh
