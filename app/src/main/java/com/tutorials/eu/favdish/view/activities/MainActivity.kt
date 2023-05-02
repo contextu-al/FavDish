@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         Pointzi.setUserId("favdish-dev-user ${Date()} | pz-${BuildConfig.PZ_VERSION_NAME}")
-        tagString(StreetHawk.Tagger.sh_email, "qa@contextu.al.com")
+        tagString(StreetHawk.Tagger.sh_email, "qa@contextu.al")
         tagString(StreetHawk.Tagger.sh_gender, "female")
         tagString(StreetHawk.Tagger.sh_first_name, "QA")
         tagString(StreetHawk.Tagger.sh_last_name, "Contextual")
