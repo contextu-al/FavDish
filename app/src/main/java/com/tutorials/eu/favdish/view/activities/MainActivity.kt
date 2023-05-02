@@ -19,6 +19,9 @@ import androidx.work.*
 import com.karumi.dexter.Dexter
 import com.pointzi.BuildConfig
 import com.pointzi.Pointzi
+import com.pointzi.Pointzi.tagDatetime
+import com.pointzi.Pointzi.tagString
+import com.pointzi.core.StreetHawk
 import com.pointzi.debug.LogLevel
 import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.databinding.ActivityMainBinding
@@ -38,6 +41,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         Pointzi.setUserId("favdish-dev-user ${Date()} | pz-${BuildConfig.PZ_VERSION_NAME}")
+        tagString(StreetHawk.Tagger.sh_email, "qa@contextu.al.com")
+        tagString(StreetHawk.Tagger.sh_gender, "female")
+        tagString(StreetHawk.Tagger.sh_first_name, "QA")
+        tagString(StreetHawk.Tagger.sh_last_name, "Contextual")
+        tagString(StreetHawk.Tagger.sh_phone, "+1-415-802-2600")
+
         //Pointzi.tagDate("session",Date())
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
