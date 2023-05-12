@@ -21,8 +21,8 @@ android {
         applicationId "pointzi.dishapp"
         minSdkVersion 28
         targetSdkVersion 33
-        versionCode 1
-        versionName "1.0 - ${getDate()}"
+        versionCode 2
+        versionName "1.0.0"
         manifestPlaceholders += [app_key: "FavDish"]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
