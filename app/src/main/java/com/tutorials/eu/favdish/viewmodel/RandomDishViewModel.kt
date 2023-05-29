@@ -60,18 +60,18 @@ class RandomDishViewModel : ViewModel() {
                  * SingleObserver as is.
                  */
                 .subscribeWith(object : DisposableSingleObserver<RandomDish.Recipes>() {
-                    override fun onSuccess(value: RandomDish.Recipes?) {
+                    override fun onSuccess(value: RandomDish.Recipes) {
                         // Update the values with response in the success method.
                         loadRandomDish.value = false
-                        randomDishResponse.value = value!!
+                        randomDishResponse.value = value
                         randomDishLoadingError.value = false
                     }
 
-                    override fun onError(e: Throwable?) {
+                    override fun onError(e: Throwable) {
                         // Update the values in the response in the error method
                         loadRandomDish.value = false
                         randomDishLoadingError.value = true
-                        e!!.printStackTrace()
+                        e.printStackTrace()
                     }
                 })
         )
