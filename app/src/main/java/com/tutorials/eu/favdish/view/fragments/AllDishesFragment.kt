@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.pointzi.Pointzi
+import com.contextu.al.Contextual
 import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.application.FavDishApplication
 import com.tutorials.eu.favdish.databinding.DialogCustomListBinding
@@ -71,7 +71,7 @@ class AllDishesFragment : Fragment() {
         mBinding.rvDishesList.adapter = mFavDishAdapter
 
 
-        mBinding.tvPzInstallId.text = "Install Id: ${Pointzi.state.user.install.id}"
+        mBinding.tvPzInstallId.text = "Install Id: ${Contextual.state.user.install.id}"
 
         mBinding.createTag.setOnClickListener {
             startActivity(Intent(activity, CreateTagActivity::class.java))

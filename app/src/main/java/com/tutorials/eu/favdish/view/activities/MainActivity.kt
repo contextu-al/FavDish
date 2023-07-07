@@ -1,7 +1,6 @@
 package com.tutorials.eu.favdish.view.activities
 
 import android.content.Intent
-import android.graphics.Point
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -16,20 +15,15 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.*
-import com.karumi.dexter.Dexter
-import com.pointzi.BuildConfig
-import com.pointzi.Pointzi
-import com.pointzi.Pointzi.tagDatetime
-import com.pointzi.Pointzi.tagString
-import com.pointzi.core.StreetHawk
-import com.pointzi.debug.LogLevel
+import com.contextu.al.BuildConfig
+import com.contextu.al.Contextual
+import com.contextu.al.Contextual.tagString
 import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.databinding.ActivityMainBinding
 import com.tutorials.eu.favdish.model.notification.NotifyWorker
 import com.tutorials.eu.favdish.utils.Constants
 import java.util.*
 import java.util.concurrent.TimeUnit
-import java.util.jar.Manifest
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,12 +34,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Pointzi.setUserId("favdish-dev-user ${Date()} | pz-${BuildConfig.PZ_VERSION_NAME}")
-        tagString(StreetHawk.Tagger.sh_email, "qa@contextu.al")
-        tagString(StreetHawk.Tagger.sh_gender, "female")
-        tagString(StreetHawk.Tagger.sh_first_name, "QA")
-        tagString(StreetHawk.Tagger.sh_last_name, "Contextual")
-        tagString(StreetHawk.Tagger.sh_phone, "+1-415-802-2600")
+        Contextual.setUserId("favdish-dev-user ${Date()} | pz-${BuildConfig.CTX_VERSION_NAME}")
+        tagString("sh_email", "qa@contextu.al")
+        tagString("sh_gender", "female")
+        tagString("sh_first_name", "QA")
+        tagString("sh_last_name", "Contextual")
+        tagString("sh_phone", "+1-415-802-2600")
 
         //Pointzi.tagDate("session",Date())
 
