@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_200sdp"
                 android:background="@color/dish_image_background"
-                android:contentDescription="@string/image_contentDescription"
+                android:contentDescription="dish_image"
                 android:scaleType="fitXY" />
 
             <LinearLayout
@@ -37,7 +37,7 @@
                     android:id="@+id/iv_favorite_dish"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/image_contentDescription"
+                    android:contentDescription="favorite_dish"
                     android:src="@drawable/ic_favorite_unselected" />
             </LinearLayout>
         </FrameLayout>
@@ -49,6 +49,7 @@
             android:layout_below="@id/fl_dish_image"
             android:layout_margin="@dimen/_10sdp"
             android:textColor="@color/blue_grey_900"
+            android:contentDescription="dish_title"
             android:textSize="@dimen/_20sdp"
             android:textStyle="bold"
             tools:text="Dish Title" />
@@ -61,6 +62,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:textColor="@color/grey_900"
+            android:contentDescription="dish_type"
             android:textSize="@dimen/_16sdp"
             tools:text="Type" />
 
@@ -72,6 +74,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:textColor="@color/grey_500"
+            android:contentDescription="dish_category"
             android:textSize="@dimen/_14sdp"
             tools:text="Category" />
 
@@ -84,6 +87,7 @@
             android:text="@string/lbl_ingredients"
             android:textSize="@dimen/_16sdp"
             android:textColor="@color/blue_grey_900"
+            android:contentDescription="dish_ingredients_label"
             android:textStyle="bold" />
 
         <TextView
@@ -94,6 +98,7 @@
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
             android:layout_below="@id/tv_ingredients_label"
+            android:contentDescription="dish_ingredients"
             android:textSize="@dimen/_14sdp"
             tools:text="Ingredients Value" />
 
@@ -102,6 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_ingredients"
+            android:contentDescription="cooking_direction_label"
             android:layout_margin="@dimen/_10sdp"
             android:text="@string/lbl_direction_to_cook"
             android:textSize="@dimen/_16sdp"
@@ -112,6 +118,7 @@
             android:id="@+id/tv_cooking_direction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:contentDescription="cooking_direction"
             android:textColor="@color/grey_900"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
@@ -123,6 +130,7 @@
             android:id="@+id/tv_cooking_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:contentDescription="cooking_time"
             android:layout_below="@id/tv_cooking_direction"
             android:layout_margin="@dimen/_16sdp"
             android:gravity="center"

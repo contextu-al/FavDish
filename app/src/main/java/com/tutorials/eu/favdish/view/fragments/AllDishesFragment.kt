@@ -70,8 +70,7 @@ class AllDishesFragment : Fragment() {
         // adapter instance is set to the recyclerview to inflate the items.
         mBinding.rvDishesList.adapter = mFavDishAdapter
 
-
-        mBinding.tvPzInstallId.text = "Install Id: ${Contextual.state.user.install.id}"
+        mBinding.tvCtxInstallId.text = "Install Id: ${Contextual.uuidInstallId}"
 
         mBinding.createTag.setOnClickListener {
             startActivity(Intent(activity, CreateTagActivity::class.java))
@@ -113,7 +112,6 @@ class AllDishesFragment : Fragment() {
      * @param favDish
      */
     fun dishDetails(favDish: FavDish) {
-
         if (requireActivity() is MainActivity) {
             (activity as MainActivity?)!!.hideBottomNavigationView()
         }

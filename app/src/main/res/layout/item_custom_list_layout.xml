@@ -13,6 +13,7 @@
         android:gravity="center"
         android:padding="@dimen/_10sdp"
         android:textAllCaps="true"
+        android:contentDescription="dish_item"
         android:textColor="@color/grey_900"
         android:textSize="@dimen/_16sdp"
         tools:text="Item Value" />

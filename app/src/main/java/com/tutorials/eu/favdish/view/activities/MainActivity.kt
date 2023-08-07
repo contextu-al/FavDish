@@ -41,8 +41,6 @@ class MainActivity : AppCompatActivity() {
         tagString("sh_last_name", "Contextual")
         tagString("sh_phone", "+1-415-802-2600")
 
-        //Pointzi.tagDate("session",Date())
-
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 

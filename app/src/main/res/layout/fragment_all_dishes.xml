@@ -17,13 +17,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tv_pz_installId"
+            android:id="@+id/tv_ctx_installId"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_12sdp"
             android:layout_weight="2"
             android:layout_gravity="center_horizontal"
-            android:gravity="start" />
+            android:gravity="start"
+            android:contentDescription="ctx_installId" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/create_tag"
@@ -56,6 +57,7 @@
         android:textSize="@dimen/_16sdp"
         android:textStyle="bold"
         android:visibility="gone"
+        android:contentDescription="no_dishes_added_yet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
