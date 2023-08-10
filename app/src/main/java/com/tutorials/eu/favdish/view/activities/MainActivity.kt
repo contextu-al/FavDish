@@ -15,9 +15,9 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.*
-import com.contextu.al.BuildConfig
-import com.contextu.al.Contextual
-import com.contextu.al.Contextual.tagString
+import com.pointzi.BuildConfig
+import com.pointzi.Pointzi.setUserId
+import com.pointzi.Pointzi.tagString
 import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.databinding.ActivityMainBinding
 import com.tutorials.eu.favdish.model.notification.NotifyWorker
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Contextual.setUserId("favdish-dev-user ${Date()} | pz-${BuildConfig.CTX_VERSION_NAME}")
+        setUserId("favdish-dev-user ${Date()} | pz-${BuildConfig.PZ_VERSION_NAME}")
         tagString("sh_email", "qa@contextu.al")
         tagString("sh_gender", "female")
         tagString("sh_first_name", "QA")
