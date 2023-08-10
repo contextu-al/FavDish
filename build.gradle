@@ -20,7 +20,7 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url "https://repo.contextu.al/sdk/contextual/" }
+        maven { url "https://repo.pointzi.com/sdk/pointzi/" }
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
