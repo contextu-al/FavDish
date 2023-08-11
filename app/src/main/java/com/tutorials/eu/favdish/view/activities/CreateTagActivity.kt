@@ -3,7 +3,7 @@ package com.tutorials.eu.favdish.view.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.contextu.al.Contextual
+import com.pointzi.Pointzi
 import com.tutorials.eu.favdish.databinding.ActivityCreateTagBinding
 import java.lang.NumberFormatException
 
@@ -31,9 +31,9 @@ class CreateTagActivity : AppCompatActivity() {
         } else {
             try {
                 val newValue = value.toDouble()
-                Contextual.tagNumeric(tag, newValue)
+                Pointzi.tagNumeric(tag, newValue)
             } catch (e: NumberFormatException) {
-                Contextual.tagString(tag, value)
+                Pointzi.tagString(tag, value)
             }
         }
         Toast.makeText(this, "Tag saved", Toast.LENGTH_SHORT).show()
