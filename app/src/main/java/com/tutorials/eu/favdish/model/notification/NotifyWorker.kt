@@ -80,7 +80,6 @@ class NotifyWorker(context: Context, workerParams: WorkerParameters) :
         // For Example InboxStyle() which is used for simple Text message.
         val bigPicStyle = NotificationCompat.BigPictureStyle()
             .bigPicture(bitmap)
-            .bigLargeIcon(null) // The null is passed to avoid the duplication of image when the notification is en-large from notification tray.
         // END
 
         // TODO Step 12: Define the pending intent for Notification.

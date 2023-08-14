@@ -21,8 +21,8 @@ android {
         applicationId "pointzi.dishapp"
         minSdkVersion 24
         targetSdkVersion 33
-        versionCode 1
-        versionName "1.0 - ${getDate()}"
+        versionCode 3
+        versionName "1.0.0"
         manifestPlaceholders += [app_key: "FavDish"]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -74,18 +74,28 @@ android {
     }
 
 }
+apply from: '../gradle/version.gradle'
 
 dependencies {
 
     println("Current flavor selected: " + getCurrentFlavor())
     println("SDK Version: " + getContextualSdkVersion())
     if(getCurrentFlavor().contentEquals("localDev")){
-        implementation project(":contextual")
-    } else if(getCurrentFlavor().contentEquals("prod")){
-        implementation (group: "com.pointzi", name: "pointzi", version: getContextualSdkVersion())
+        implementation project(":contextual"),  {
+            exclude group: 'com.github.bumptech.glide'
+            exclude group: 'androidx.room'
+        }
+    } else if(getCurrentFlavor().contains("prod") || getCurrentFlavor().contains("demo")) {
+        implementation(group: "com.pointzi", name: "pointzi", version: getContextualSdkVersion()) {
+            exclude group: 'com.github.bumptech.glide'
+            exclude group: 'androidx.room'
+        }
     } else {
         // This is used by CI(dev and staging)
-        implementation (group: "com.pointzi.dev", name: "pointzi", version: getContextualSdkVersion())
+        implementation (group: "com.pointzi.dev", name: "pointzi", version: getContextualSdkVersion()){
+            exclude group: 'com.github.bumptech.glide'
+            exclude group: 'androidx.room'
+        }
     }
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -111,7 +121,7 @@ dependencies {
 
     // Room components
     // Reference Link: https://developer.android.com/training/data-storage/room
-    def room_version = '2.4.0'
+    def room_version = '2.5.1'
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 

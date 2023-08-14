@@ -41,7 +41,9 @@ APK_LOCATION=""
 
 GIT_VERSION=$(git log -1 --format="%h")
 BUILD_TIME=$(date)
-
+git add app/build.gradle
+git commit -m "Bump FavDish app version"
+git push
 if [ ! -f local.properties ]; then
   touch local.properties
 fi

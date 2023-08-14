@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.pointzi.Pointzi
-import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.databinding.ActivityCreateTagBinding
 import java.lang.NumberFormatException
 
