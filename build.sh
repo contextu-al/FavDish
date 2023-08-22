@@ -44,7 +44,10 @@ if [ "$should_setup_emulator" == "true" ]; then
   echo "y" | /Users/buildcontextual/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager --install 'system-images;android-TiramisuPrivacySandbox;google_apis_playstore;arm64-v8a'
   /Users/buildcontextual/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager --install emulator
   echo "no" | /Users/buildcontextual/Library/Android/sdk/cmdline-tools/latest/bin/avdmanager --verbose create avd --force --name "contextual_sdk_emulator" --package "system-images;android-TiramisuPrivacySandbox;google_apis_playstore;arm64-v8a"
-  emulator -avd contextual_sdk_emulator -noaudio -no-boot-anim -netdelay none -accel on -no-window -no-snapshot -gpu swiftshader_indirect
+  # Required for mac
+  cd /Users/buildcontextual/Library/Android/sdk/emulator/qemu
+  ln -s darwin-aarch64 darwin-x86_64
+  /Users/buildcontextual/Library/Android/sdk/emulator -avd contextual_sdk_emulator
 fi
 
 
