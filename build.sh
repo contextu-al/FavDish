@@ -47,7 +47,7 @@ if [ "$should_setup_emulator" == "true" ]; then
   # Required for mac
   cd /Users/buildcontextual/Library/Android/sdk/emulator/qemu
   ln -s darwin-aarch64 darwin-x86_64
-  /Users/buildcontextual/Library/Android/sdk/emulator -avd contextual_sdk_emulator
+  /Users/buildcontextual/Library/Android/sdk/emulator/emulator -avd contextual_sdk_emulator
 fi
 
 
