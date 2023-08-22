@@ -41,6 +41,7 @@ APK_LOCATION=""
 
 if [ "$should_setup_emulator" == "true" ]; then
   # hard coding path is bad
+  export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
   /Users/buildcontextual/Library/Android/sdk/tools/bin/sdkmanager --install 'system-images;android-TiramisuPrivacySandbox;google_apis_playstore;x86_64'
   /Users/buildcontextual/Library/Android/sdk/tools/bin/sdkmanager --install emulator
   echo "no" | /Users/buildcontextual/Library/Android/sdk/tools/bin/avdmanager --verbose create avd --force --name "contextual_sdk_emulator" --package "system-images;android-TiramisuPrivacySandbox;google_apis_playstore;x86_64"
