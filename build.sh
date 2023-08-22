@@ -54,6 +54,10 @@ if [ "$should_setup_emulator" == "true" ]; then
   cd contextual-sdk-android
   git checkout sdk-v3
   git pull
+  rm -f local.properties
+  echo "VERSION_NAME=2" >> local.properties
+  echo "VERSION_CODE=2" >> local.properties
+  echo "GROUP=com.contextu.al" > local.properties
   ./gradlew -Pandroid.testInstrumentationRunnerArguments.class=com.contextu.al.data.storage.RepositoryTest connectedAndroidTest
 fi
 
