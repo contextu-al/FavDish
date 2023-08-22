@@ -40,11 +40,11 @@ SDK_ENV="Dev"
 APK_LOCATION=""
 
 if [ "$should_setup_emulator" == "true" ]; then
-  # hard coding path is bad 
-  /Users/marc/Library/Android/sdk/tools/bin/sdkmanager --install 'system-images;android-TiramisuPrivacySandbox;google_apis_playstore;x86_64'
-  /Users/marc/Library/Android/sdk/tools/bin/sdkmanager --install emulator
-  echo "no" | /Users/marc/Library/Android/sdk/tools/bin/avdmanager --verbose create avd --force --name "contextual_sdk_emulator" --package "system-images;android-TiramisuPrivacySandbox;google_apis_playstore;x86_64"
-  /Users/marc/Library/Android/sdk/tools/bin/emulator -avd contextual_sdk_emulator -noaudio -no-boot-anim -netdelay none -accel on -no-window -no-snapshot -gpu swiftshader_indirect
+  # hard coding path is bad
+  /Users/buildcontextual/Library/Android/sdk/tools/bin/sdkmanager --install 'system-images;android-TiramisuPrivacySandbox;google_apis_playstore;x86_64'
+  /Users/buildcontextual/Library/Android/sdk/tools/bin/sdkmanager --install emulator
+  echo "no" | /Users/buildcontextual/Library/Android/sdk/tools/bin/avdmanager --verbose create avd --force --name "contextual_sdk_emulator" --package "system-images;android-TiramisuPrivacySandbox;google_apis_playstore;x86_64"
+  /Users/buildcontextual/Library/Android/sdk/tools/bin/emulator -avd contextual_sdk_emulator -noaudio -no-boot-anim -netdelay none -accel on -no-window -no-snapshot -gpu swiftshader_indirect
 fi
 
 
