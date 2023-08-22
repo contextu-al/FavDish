@@ -39,6 +39,7 @@ APP_KEY="FavDish"
 SDK_ENV="Dev"
 APK_LOCATION=""
 
+# this piece of code is bad, but it works for now....
 if [ "$should_setup_emulator" == "true" ]; then
   # hard coding path is bad
   echo "y" | /Users/buildcontextual/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager --install 'system-images;android-TiramisuPrivacySandbox;google_apis_playstore;arm64-v8a'
@@ -48,6 +49,12 @@ if [ "$should_setup_emulator" == "true" ]; then
   cd /Users/buildcontextual/Library/Android/sdk/emulator/qemu
   ln -s darwin-aarch64 darwin-x86_64
   /Users/buildcontextual/Library/Android/sdk/emulator/emulator -avd contextual_sdk_emulator
+  cd /Users/buildcontextual
+  git clone https://gitlab.com/contextual/sdks/android/contextual-sdk-android
+  cd contextual-sdk-android
+  git checkout sdk-v3
+  git pull
+  ./gradlew -Pandroid.testInstrumentationRunnerArguments.class=com.contextu.al.data.storage.RepositoryTest connectedAndroidTest
 fi
 
 
