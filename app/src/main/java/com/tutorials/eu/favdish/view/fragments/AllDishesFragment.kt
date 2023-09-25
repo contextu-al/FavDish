@@ -70,8 +70,6 @@ class AllDishesFragment : Fragment() {
         // adapter instance is set to the recyclerview to inflate the items.
         mBinding.rvDishesList.adapter = mFavDishAdapter
 
-        mBinding.tvCtxInstallId.text = "Install Id: ${Contextual.uuidInstallId}"
-
         mBinding.createTag.setOnClickListener {
             startActivity(Intent(activity, CreateTagActivity::class.java))
         }
