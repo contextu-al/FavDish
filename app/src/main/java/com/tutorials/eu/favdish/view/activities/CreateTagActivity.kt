@@ -3,9 +3,10 @@ package com.tutorials.eu.favdish.view.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.pointzi.Pointzi
+import com.contextu.al.Contextual
 import com.tutorials.eu.favdish.databinding.ActivityCreateTagBinding
 import java.lang.NumberFormatException
+import java.time.OffsetDateTime
 
 class CreateTagActivity : AppCompatActivity() {
 
@@ -29,11 +30,18 @@ class CreateTagActivity : AppCompatActivity() {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show()
             return
         } else {
-            try {
+            val selectedTag = mBinding.tagSpinner.selectedItem.toString()
+            if(selectedTag.startsWith("String")){
+                Contextual.tagString(tag, value)
+            } else if(selectedTag.startsWith("Numeric")){
                 val newValue = value.toDouble()
-                Pointzi.tagNumeric(tag, newValue)
-            } catch (e: NumberFormatException) {
-                Pointzi.tagString(tag, value)
+                Contextual.tagNumeric(tag, newValue)
+            } else if(selectedTag.startsWith("Date Time")){
+                try {
+                    Contextual.tagDatetime(tag, OffsetDateTime.parse(value))
+                } catch (exception: Exception){
+                    Toast.makeText(this, "Tag is not ISO-8601 compliant!", Toast.LENGTH_SHORT).show()
+                }
             }
         }
         Toast.makeText(this, "Tag saved", Toast.LENGTH_SHORT).show()
