@@ -1,5 +1,6 @@
 package com.tutorials.eu.favdish.view.activities
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -15,9 +16,10 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.*
-import com.pointzi.BuildConfig
-import com.pointzi.Pointzi.setUserId
-import com.pointzi.Pointzi.tagString
+import com.contextu.al.BuildConfig
+import com.contextu.al.Contextual
+import com.contextu.al.Contextual.tagString
+import com.contextu.al.core.CtxEventObserver
 import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.databinding.ActivityMainBinding
 import com.tutorials.eu.favdish.model.notification.NotifyWorker
@@ -33,13 +35,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Contextual.init(this.application, "FavDish", object : CtxEventObserver{
+            override fun onInstallRegistered(installId: UUID, context: Context) {
+                Contextual.tagStringArray(mutableMapOf(
+                    "sh_cuid" to "favdish-dev-user ${Date()} | pz-${BuildConfig.CTX_VERSION_NAME}",
+                    "sh_email" to "qa@contextu.al", "sh_first_name" to "QA",
+                    "sh_last_name" to "Contextual", "sh_gender" to "female"))
+            }
 
-        setUserId("favdish-dev-user ${Date()} | pz-${BuildConfig.PZ_VERSION_NAME}")
-        tagString("sh_email", "qa@contextu.al")
-        tagString("sh_gender", "female")
-        tagString("sh_first_name", "QA")
-        tagString("sh_last_name", "Contextual")
-        tagString("sh_phone", "+1-415-802-2600")
+            override fun onInstallRegisterError(errorMsg: String) {
+            }
+
+        })
+
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
