@@ -82,11 +82,11 @@ class AllDishesFragment : Fragment() {
                     AlertDialog.Builder(requireActivity())
                         .setTitle("SDK Extensibility")
                         .setMessage("Feed ID: " + guidePayload.feedId)
-                        .setPositiveButton("Ok") { _,_ ->
-                            guidePayload.nextGuide
+                        .setPositiveButton("Ok") { _, _ ->
+                            guidePayload.nextGuide.onClick(view)
                         }
                         .setNegativeButton("Dismiss"){ _, _ ->
-                            guidePayload.dismissGuide
+                            guidePayload.dismissGuide.onClick(view)
                         }
                         .show()
                 }
