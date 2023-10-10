@@ -76,10 +76,10 @@ class AllDishesFragment : Fragment() {
             startActivity(Intent(activity, CreateTagActivity::class.java))
         }
 
-        mBinding.sdkExtension.setOnClickListener {
-            Contextual.ctxUiObserver = object : CtxUiObserver {
-                override fun onMatched(guidePayload: GuidePayload) {
-                    AlertDialog.Builder(requireContext())
+        Contextual.ctxUiObserver = object : CtxUiObserver {
+            override fun onMatched(guidePayload: GuidePayload) {
+                mBinding.sdkExtension.setOnClickListener {
+                    AlertDialog.Builder(requireActivity())
                         .setTitle("SDK Extensibility")
                         .setMessage("Feed ID: " + guidePayload.feedId)
                         .setPositiveButton("Ok") { _,_ ->
@@ -92,6 +92,7 @@ class AllDishesFragment : Fragment() {
                 }
             }
         }
+
         /**
          * Add an observer on the LiveData returned by getAllDishesList.
          * The onChanged() method fires when the observed data changes and the activity is in the foreground.
