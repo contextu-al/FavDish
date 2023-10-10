@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.contextu.al.Contextual
+import com.contextu.al.CtxUiObserver
+import com.contextu.al.model.GuidePayload
 import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.application.FavDishApplication
 import com.tutorials.eu.favdish.databinding.DialogCustomListBinding
@@ -74,6 +76,22 @@ class AllDishesFragment : Fragment() {
             startActivity(Intent(activity, CreateTagActivity::class.java))
         }
 
+        mBinding.sdkExtension.setOnClickListener {
+            Contextual.ctxUiObserver = object : CtxUiObserver {
+                override fun onMatched(guidePayload: GuidePayload) {
+                    AlertDialog.Builder(requireContext())
+                        .setTitle("SDK Extensibility")
+                        .setMessage("Feed ID: " + guidePayload.feedId)
+                        .setPositiveButton("Ok") { _,_ ->
+                            guidePayload.nextGuide
+                        }
+                        .setNegativeButton("Dismiss"){ _, _ ->
+                            guidePayload.dismissGuide
+                        }
+                        .show()
+                }
+            }
+        }
         /**
          * Add an observer on the LiveData returned by getAllDishesList.
          * The onChanged() method fires when the observed data changes and the activity is in the foreground.

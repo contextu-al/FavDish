@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -18,8 +20,9 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.work.*
 import com.contextu.al.BuildConfig
 import com.contextu.al.Contextual
-import com.contextu.al.Contextual.tagString
+import com.contextu.al.CtxUiObserver
 import com.contextu.al.core.CtxEventObserver
+import com.contextu.al.model.GuidePayload
 import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.databinding.ActivityMainBinding
 import com.tutorials.eu.favdish.model.notification.NotifyWorker
@@ -35,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Contextual.init(this.application, "FavDish", object : CtxEventObserver{
+        Contextual.init(application, "FavDish", object : CtxEventObserver {
             override fun onInstallRegistered(installId: UUID, context: Context) {
                 Contextual.tagStringArray(mutableMapOf(
                     "sh_cuid" to "favdish-dev-user ${Date()} | pz-${BuildConfig.CTX_VERSION_NAME}",
@@ -44,9 +47,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onInstallRegisterError(errorMsg: String) {
+                Toast.makeText(application, errorMsg, Toast.LENGTH_LONG).show()
             }
-
         })
+
 
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
