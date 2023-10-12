@@ -75,21 +75,18 @@ class AllDishesFragment : Fragment() {
         mBinding.createTag.setOnClickListener {
             startActivity(Intent(activity, CreateTagActivity::class.java))
         }
-
-        Contextual.ctxUiObserver = object : CtxUiObserver {
-            override fun onMatched(guidePayload: GuidePayload) {
-                mBinding.sdkExtension.setOnClickListener {
-                    AlertDialog.Builder(requireActivity())
-                        .setTitle("SDK Extensibility")
-                        .setMessage("Feed ID: " + guidePayload.feedId)
-                        .setPositiveButton("Ok") { _, _ ->
-                            guidePayload.nextGuide.onClick(view)
-                        }
-                        .setNegativeButton("Dismiss"){ _, _ ->
-                            guidePayload.dismissGuide.onClick(view)
-                        }
-                        .show()
-                }
+        Contextual.registerCustomWidget("favdish_example_demo").observe(viewLifecycleOwner){ guidePayload ->
+            mBinding.sdkExtension.setOnClickListener {
+                AlertDialog.Builder(requireActivity())
+                    .setTitle(guidePayload.widget.titleText.text ?: "")
+                    .setMessage(guidePayload.widget.contentText.text ?: "")
+                    .setPositiveButton("Ok") { _, _ ->
+                        guidePayload.nextGuide.onClick(view)
+                    }
+                    .setNegativeButton("Dismiss"){ _, _ ->
+                        guidePayload.dismissGuide.onClick(view)
+                    }
+                    .show()
             }
         }
 
