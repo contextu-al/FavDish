@@ -78,25 +78,12 @@ apply from: '../gradle/version.gradle'
 
 dependencies {
 
-    println("Current flavor selected: " + getCurrentFlavor())
-    println("SDK Version: " + getContextualSdkVersion())
-    if(getCurrentFlavor().contentEquals("localDev")){
-        implementation project(":contextual"),  {
-            exclude group: 'com.github.bumptech.glide'
-            exclude group: 'androidx.room'
-        }
-    } else if(getCurrentFlavor().contains("prod") || getCurrentFlavor().contains("demo")) {
-        implementation(group: "com.pointzi", name: "pointzi", version: getContextualSdkVersion()) {
-            exclude group: 'com.github.bumptech.glide'
-            exclude group: 'androidx.room'
-        }
-    } else {
-        // This is used by CI(dev and staging)
-        implementation (group: "com.pointzi.dev", name: "pointzi", version: getContextualSdkVersion()){
-            exclude group: 'com.github.bumptech.glide'
-            exclude group: 'androidx.room'
-        }
+    implementation(group: "com.pointzi", name: "pointzi", version: "2.5.8") {
+        exclude group: 'com.github.bumptech.glide'
+        exclude group: 'androidx.room'
     }
+    implementation 'com.mapbox.maps:android:10.16.1'
+
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.7.0'
