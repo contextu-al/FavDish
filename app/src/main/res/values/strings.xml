@@ -85,4 +85,6 @@
         <item>Date Time Tag</item>
     </string-array>
 
+    <string name="mapbox_access_token">pk.eyJ1IjoiZGFuaWVsLWNvbnRleHR1YWwiLCJhIjoiY2xud2Z6eDVmMDZxbzJqcmgxN3c3YWk4biJ9.r57g01JWO3zg1pN644uHhw</string>
+
 </resources>

@@ -20,9 +20,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.work.*
 import com.contextu.al.BuildConfig
 import com.contextu.al.Contextual
-import com.contextu.al.CtxUiObserver
 import com.contextu.al.core.CtxEventObserver
-import com.contextu.al.model.GuidePayload
 import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.databinding.ActivityMainBinding
 import com.tutorials.eu.favdish.model.notification.NotifyWorker
@@ -38,19 +36,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Contextual.init(application, "FavDish", object : CtxEventObserver {
+        Contextual.init(application, getString(R.string.app_key), object : CtxEventObserver {
             override fun onInstallRegistered(installId: UUID, context: Context) {
                 Contextual.tagStringArray(mutableMapOf(
                     "sh_cuid" to "favdish-dev-user ${Date()} | pz-${BuildConfig.CTX_VERSION_NAME}",
                     "sh_email" to "qa@contextu.al", "sh_first_name" to "QA",
-                    "sh_last_name" to "Contextual", "sh_gender" to "female"))
+                    "sh_last_name" to "Contextual"))
             }
 
             override fun onInstallRegisterError(errorMsg: String) {
                 Toast.makeText(application, errorMsg, Toast.LENGTH_LONG).show()
             }
         })
-
 
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -64,7 +61,8 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.navigation_all_dishes,
                 R.id.navigation_favorite_dishes,
-                R.id.navigation_random_dish
+                R.id.navigation_random_dish,
+                R.id.navigation_maps
             )
         )
         setupActionBarWithNavController(mNavController, appBarConfiguration)

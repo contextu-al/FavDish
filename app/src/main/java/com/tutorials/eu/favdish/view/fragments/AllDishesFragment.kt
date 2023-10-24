@@ -11,9 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.contextu.al.Contextual
-import com.contextu.al.CtxUiObserver
-import com.contextu.al.model.GuidePayload
 import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.application.FavDishApplication
 import com.tutorials.eu.favdish.databinding.DialogCustomListBinding
@@ -75,20 +72,154 @@ class AllDishesFragment : Fragment() {
         mBinding.createTag.setOnClickListener {
             startActivity(Intent(activity, CreateTagActivity::class.java))
         }
-        Contextual.registerCustomWidget("favdish_example_demo").observe(viewLifecycleOwner){ guidePayload ->
-            mBinding.sdkExtension.setOnClickListener {
-                AlertDialog.Builder(requireActivity())
-                    .setTitle(guidePayload.widget.titleText.text ?: "")
-                    .setMessage(guidePayload.widget.contentText.text ?: "")
-                    .setPositiveButton("Ok") { _, _ ->
-                        guidePayload.nextGuide.onClick(view)
-                    }
-                    .setNegativeButton("Dismiss"){ _, _ ->
-                        guidePayload.dismissGuide.onClick(view)
-                    }
-                    .show()
-            }
-        }
+//        Contextual.registerCustomWidget("favdish_example_demo").observe(viewLifecycleOwner){ guidePayload ->
+//            mBinding.sdkExtension.setOnClickListener {
+//                AlertDialog.Builder(requireActivity())
+//                    .setTitle(guidePayload.widget.titleText.text ?: "")
+//                    .setMessage(guidePayload.widget.contentText.text ?: "")
+//                    .setPositiveButton("Ok") { _, _ ->
+//                        guidePayload.nextGuide.onClick(view)
+//                    }
+//                    .setNegativeButton("Dismiss"){ _, _ ->
+//                        guidePayload.dismissGuide.onClick(view)
+//                    }
+//                    .show()
+//            }
+//        }
+        val guideJson = "{\n" +
+                "    \"buttons\":{\n" +
+                "        \"dismiss\":{\n" +
+                "           \"color\":\"#000000\",\n" +
+                "           \"height\":16,\n" +
+                "           \"width\":16\n" +
+                "        },\n" +
+                "        \"layout\":\"horizontal\",\n" +
+                "        \"next\":{\n" +
+                "           \"align\":\"left\",\n" +
+                "           \"border-color\":\"#2E7D32\",\n" +
+                "           \"border-width\":1,\n" +
+                "           \"button-align\":\"right\",\n" +
+                "           \"color\":\"#000000\",\n" +
+                "           \"corner-radius\":5,\n" +
+                "           \"font-size\":14,\n" +
+                "           \"margin-right\":10,\n" +
+                "           \"padding-left\":10,\n" +
+                "           \"padding-right\":10,\n" +
+                "           \"padding-top\":0,\n" +
+                "           \"placement\":\"right\",\n" +
+                "           \"text-align\":\"center\",\n" +
+                "           \"type\":\"button\"\n" +
+                "        },\n" +
+                "        \"prev\":{\n" +
+                "           \"align\":\"left\",\n" +
+                "           \"border-color\":\"#2E7D32\",\n" +
+                "           \"border-width\":1,\n" +
+                "           \"button-align\":\"left\",\n" +
+                "           \"corner-radius\":5,\n" +
+                "           \"margin-left\":10,\n" +
+                "           \"padding-left\":10,\n" +
+                "           \"padding-right\":10,\n" +
+                "           \"placement\":\"left\",\n" +
+                "           \"text-align\":\"center\",\n" +
+                "           \"type\":\"button\"\n" +
+                "        }\n" +
+                "     },\n" +
+                "     \"content\":{\n" +
+                "        \"background-color\":\"#00000000\",\n" +
+                "        \"color\":\"#000000\",\n" +
+                "        \"font-size\":\"-1\",\n" +
+                "        \"line-height\":\"120%\",\n" +
+                "        \"margin-bottom\":10,\n" +
+                "        \"margin-left\":10,\n" +
+                "        \"margin-right\":10,\n" +
+                "        \"margin-top\":10,\n" +
+                "        \"padding-bottom\":10,\n" +
+                "        \"padding-left\":1,\n" +
+                "        \"padding-right\":1,\n" +
+                "        \"padding-top\":10,\n" +
+                "        \"text\":\"this is my first popup\",\n" +
+                "        \"text-align\":\"left\"\n" +
+                "     },\n" +
+                "     \"image\":[\n" +
+                "        \n" +
+                "     ],\n" +
+                "     \"interactions\":[\n" +
+                "        \n" +
+                "     ],\n" +
+                "     \"meta\":{\n" +
+                "        \"animation\":{\n" +
+                "           \"transition-in\":{\n" +
+                "              \"type\":\"none\"\n" +
+                "           },\n" +
+                "           \"transition-out\":{\n" +
+                "              \"type\":\"none\"\n" +
+                "           }\n" +
+                "        },\n" +
+                "        \"background-color\":\"#F9F9F9\",\n" +
+                "        \"box-shadow\":0,\n" +
+                "        \"container_type\":\"modal\",\n" +
+                "        \"dismiss-params\":{\n" +
+                "           \"touch-in\":true,\n" +
+                "           \"touch-out\":true\n" +
+                "        },\n" +
+                "        \"display-params\":{\n" +
+                "           \"_height_unit\":\"px\",\n" +
+                "           \"_width_unit\":\"%\",\n" +
+                "           \"border-color\":\"#E0E0E0\",\n" +
+                "           \"border-width\":1,\n" +
+                "           \"corner-radius\":5,\n" +
+                "           \"width\":\"80%\"\n" +
+                "        },\n" +
+                "        \"dynamicUrl\":{\n" +
+                "           \"display_condition\":\"any_page\",\n" +
+                "           \"matching_condition\":{\n" +
+                "              \"conditions\":[\n" +
+                "                 {\n" +
+                "                    \"operator\":\"equal\"\n" +
+                "                 }\n" +
+                "              ],\n" +
+                "              \"match_type\":\"any\"\n" +
+                "           }\n" +
+                "        },\n" +
+                "        \"id\":10,\n" +
+                "        \"margin-bottom\":0,\n" +
+                "        \"margin-left\":0,\n" +
+                "        \"margin-right\":0,\n" +
+                "        \"margin-top\":0,\n" +
+                "        \"padding-bottom\":10,\n" +
+                "        \"padding-left\":10,\n" +
+                "        \"padding-right\":10,\n" +
+                "        \"padding-top\":10,\n" +
+                "        \"placement\":\"center\",\n" +
+                "        \"tool\":\"modal\",\n" +
+                "        \"view\":\"_ALL_\"\n" +
+                "     },\n" +
+                "     \"overlay\":{\n" +
+                "        \n" +
+                "     },\n" +
+                "     \"screenshot\":{\n" +
+                "        \"client_version\":\"Unknown\",\n" +
+                "        \"height\":568,\n" +
+                "        \"id\":\"_ALL_\",\n" +
+                "        \"json\":[\n" +
+                "           \n" +
+                "        ],\n" +
+                "        \"model\":\"Simulator\",\n" +
+                "        \"modified\":\"Unknown\",\n" +
+                "        \"orientation\":\"portrait\",\n" +
+                "        \"view\":\"_ALL_\",\n" +
+                "        \"width\":320\n" +
+                "     },\n" +
+                "     \"templateId\":213,\n" +
+                "     \"theme\":\"popup\",\n" +
+                "     \"title\":{\n" +
+                "        \"color\":\"#000000\",\n" +
+                "        \"font-size\":20,\n" +
+                "        \"font-weight\":\"bold\",\n" +
+                "        \"text-align\":\"left\"\n" +
+                "     }\n" +
+                "}"
+        //Contextual.addGuide(guideJson)
 
         /**
          * Add an observer on the LiveData returned by getAllDishesList.
