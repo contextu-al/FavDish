@@ -9,6 +9,11 @@ import com.contextu.al.Contextual
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.tutorials.eu.favdish.databinding.ActivityCreateTagBinding
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.OffsetDateTime
@@ -93,12 +98,22 @@ class CreateTagActivity : AppCompatActivity() {
                 Contextual.tagNumeric(tag, newValue)
             } else if(selectedTag.startsWith("Date Time")){
                 try {
-                    Contextual.tagDatetime(tag, OffsetDateTime.parse(value))
+                    val exception = CoroutineExceptionHandler{ _, exception ->
+                        Toast.makeText(this, "Error trying to tag: $value", Toast.LENGTH_SHORT).show()
+                    }
+                    val taggedDateTime = OffsetDateTime.parse(value)
+                    CoroutineScope(Dispatchers.IO + exception).launch {
+                        Contextual.tagDatetime(tag, taggedDateTime).collectLatest { listOfTags ->
+                            if(listOfTags.isNotEmpty()){
+                                println("Tagged: " + listOfTags[0])
+                            }
+                        }
+                    }
                 } catch (exception: Exception){
                     Toast.makeText(this, "Tag is not ISO-8601 compliant!", Toast.LENGTH_SHORT).show()
                 }
             }
+            Toast.makeText(this, "$value saved", Toast.LENGTH_SHORT).show()
         }
-        Toast.makeText(this, "Tag saved", Toast.LENGTH_SHORT).show()
     }
 }
