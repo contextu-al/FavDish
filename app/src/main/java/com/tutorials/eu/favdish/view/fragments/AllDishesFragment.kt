@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.contextu.al.Contextual
 import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.application.FavDishApplication
 import com.tutorials.eu.favdish.databinding.DialogCustomListBinding
@@ -72,20 +73,6 @@ class AllDishesFragment : Fragment() {
         mBinding.createTag.setOnClickListener {
             startActivity(Intent(activity, CreateTagActivity::class.java))
         }
-//        Contextual.registerCustomWidget("favdish_example_demo").observe(viewLifecycleOwner){ guidePayload ->
-//            mBinding.sdkExtension.setOnClickListener {
-//                AlertDialog.Builder(requireActivity())
-//                    .setTitle(guidePayload.widget.titleText.text ?: "")
-//                    .setMessage(guidePayload.widget.contentText.text ?: "")
-//                    .setPositiveButton("Ok") { _, _ ->
-//                        guidePayload.nextGuide.onClick(view)
-//                    }
-//                    .setNegativeButton("Dismiss"){ _, _ ->
-//                        guidePayload.dismissGuide.onClick(view)
-//                    }
-//                    .show()
-//            }
-//        }
         val guideJson = "{\n" +
                 "    \"buttons\":{\n" +
                 "        \"dismiss\":{\n" +
@@ -225,14 +212,24 @@ class AllDishesFragment : Fragment() {
          * Add an observer on the LiveData returned by getAllDishesList.
          * The onChanged() method fires when the observed data changes and the activity is in the foreground.
          */
+        val arrayListOfDishes = arrayListOf<FavDish>()
+        Contextual.registerGuideBlock("AdhocRowInsertion").observe(viewLifecycleOwner){ contextualContainer ->
+            val favDish = FavDish("https://staging.contextu.al/static-image/assets/img/icons/FlatIcons/Party/dinner.png", Constants.DISH_IMAGE_SOURCE_ONLINE,
+                contextualContainer.guidePayload.guide.titleText.text ?: "", "", "", "", "", "")
+            if(!arrayListOfDishes.contains(favDish)){
+                arrayListOfDishes.add(favDish)
+            }
+            mFavDishAdapter.dishesList(arrayListOfDishes)
+        }
         mFavDishViewModel.allDishesList.observe(viewLifecycleOwner) { dishes ->
             dishes.let {
-
                 if (it.isNotEmpty()) {
+                    dishes.forEach {  favDish ->
+                        arrayListOfDishes.add(favDish)
+                    }
 
                     mBinding.rvDishesList.visibility = View.VISIBLE
                     mBinding.tvNoDishesAddedYet.visibility = View.GONE
-
                     mFavDishAdapter.dishesList(it)
                 } else {
 
