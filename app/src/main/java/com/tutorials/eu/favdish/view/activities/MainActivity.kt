@@ -1,6 +1,7 @@
 package com.tutorials.eu.favdish.view.activities
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -17,7 +18,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.*
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.contextu.al.BuildConfig
 import com.contextu.al.Contextual
 import com.contextu.al.core.CtxEventObserver
@@ -25,7 +30,8 @@ import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.databinding.ActivityMainBinding
 import com.tutorials.eu.favdish.model.notification.NotifyWorker
 import com.tutorials.eu.favdish.utils.Constants
-import java.util.*
+import java.util.Date
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -79,6 +85,23 @@ class MainActivity : AppCompatActivity() {
         }
         // END
         startWork()
+
+        val checkedItems = booleanArrayOf(false, false, false, false)
+        val multiChoiceItems = arrayOf("Work", "Fun", "Learning", "Social")
+
+        Contextual.registerGuideBlock("MultipleChoiceCustom").observe(this){ contextualContainer ->
+
+            AlertDialog.Builder(this@MainActivity)
+                .setTitle("What do you usually use our app for?")
+                .setMultiChoiceItems(multiChoiceItems, checkedItems) { dialog, which, isChecked ->
+
+                }
+                .setPositiveButton("OK") { dialog, which ->
+
+                }
+                .create()
+                .show()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

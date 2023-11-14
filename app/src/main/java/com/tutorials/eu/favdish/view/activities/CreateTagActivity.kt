@@ -103,10 +103,8 @@ class CreateTagActivity : AppCompatActivity() {
                     }
                     val taggedDateTime = OffsetDateTime.parse(value)
                     CoroutineScope(Dispatchers.IO + exception).launch {
-                        Contextual.tagDatetime(tag, taggedDateTime).collectLatest { listOfTags ->
-                            if(listOfTags.isNotEmpty()){
-                                println("Tagged: " + listOfTags[0])
-                            }
+                        Contextual.tagDatetime(tag, taggedDateTime).collectLatest { tags ->
+                            println("Tagged: " + tags?.tagStringValue)
                         }
                     }
                 } catch (exception: Exception){
