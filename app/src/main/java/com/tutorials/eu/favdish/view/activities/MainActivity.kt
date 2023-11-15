@@ -1,7 +1,6 @@
 package com.tutorials.eu.favdish.view.activities
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -88,19 +87,20 @@ class MainActivity : AppCompatActivity() {
 
         val checkedItems = booleanArrayOf(false, false, false, false)
         val multiChoiceItems = arrayOf("Work", "Fun", "Learning", "Social")
+        val customWidget = "MultipleChoiceCustom"
+        Contextual.registerGuideBlock(customWidget).observe(this){ contextualContainer ->
+            if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(customWidget)){
+                AlertDialog.Builder(this@MainActivity)
+                    .setTitle("What do you usually use our app for?")
+                    .setMultiChoiceItems(multiChoiceItems, checkedItems) { dialog, which, isChecked ->
 
-        Contextual.registerGuideBlock("MultipleChoiceCustom").observe(this){ contextualContainer ->
+                    }
+                    .setPositiveButton("OK") { dialog, which ->
 
-            AlertDialog.Builder(this@MainActivity)
-                .setTitle("What do you usually use our app for?")
-                .setMultiChoiceItems(multiChoiceItems, checkedItems) { dialog, which, isChecked ->
-
-                }
-                .setPositiveButton("OK") { dialog, which ->
-
-                }
-                .create()
-                .show()
+                    }
+                    .create()
+                    .show()
+            }
         }
     }
 
