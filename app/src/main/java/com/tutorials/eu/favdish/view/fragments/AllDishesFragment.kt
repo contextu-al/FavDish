@@ -217,7 +217,7 @@ class AllDishesFragment : Fragment() {
          */
         val arrayListOfDishes = arrayListOf<FavDish>()
         val customWidget = "AdhocRowInsertion"
-        Contextual.registerGuideBlock("AdhocRowInsertion").observe(viewLifecycleOwner){ contextualContainer ->
+        Contextual.registerGuideBlock(customWidget).observe(viewLifecycleOwner){ contextualContainer ->
             if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(customWidget)){
                 val favDish = FavDish("https://staging.contextu.al/static-image/assets/img/icons/FlatIcons/Party/dinner.png", Constants.DISH_IMAGE_SOURCE_ONLINE,
                     contextualContainer.guidePayload.guide.titleText.text ?: "", "", "", "", "", "")
