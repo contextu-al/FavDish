@@ -1,7 +1,9 @@
 # Contextual
 
 <img src="https://contextu.al/wp-content/uploads/2022/01/Contextual-icon-560x285.png" alt="Contextual Logo" width="100"/>
+
 https://contextu.al/ 
+
 [![Twitter](https://img.shields.io/badge/Twitter-%40contextu_al-blue.svg)](https://twitter.com/contextu_al)
 
 
