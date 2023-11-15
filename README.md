@@ -1,9 +1,8 @@
 # Contextual
 
-https://contextu.al/
+https://contextu.al/ [![Twitter](https://img.shields.io/badge/Twitter-%40contextu_al-blue.svg)](https://twitter.com/contextu_al)
 
-![Main View](https://contextu.al/wp-content/uploads/2022/01/Contextual-icon-560x285.png)
-[![Twitter](https://img.shields.io/badge/Twitter-%40contextu_al-blue.svg)](https://twitter.com/contextu_al)
+<img src="https://contextu.al/wp-content/uploads/2022/01/Contextual-icon-560x285.png" alt="Contextual Logo" width="100"/>
 
 # FavDish
 Native android sample app developed by the contextual android team, used in testing sdk features,
@@ -120,7 +119,7 @@ This row example is based on a standard Contextual Announcement template. The st
 7. In the sidebar under the relevent sections: Edit the title, content, image location (upload images etc)
 8. Save the guide and show to your Product Team, once you release this version of the App they can launch List Row Insertion to whoever they want, whenever they want.
 
- <img src="./airbnb-main/img/Inline-Feature-Announcement.gif" alt="Adding your Extra JSON" width="200"/>
+ <img src="./screenshots/Inline-Feature-Announcement.gif" alt="Adding your Extra JSON" width="200"/>
 
  ## Multiple Choice Survey 
 
@@ -139,7 +138,7 @@ This is a terrific example about how complex or very custom use-cases can be dep
 }
 `
 
-<img src="./airbnb-main/img/Popup-Survey.gif" alt="Adding your Extra JSON" width="200"/>
+<img src="./screenshots/Popup-Survey.gif" alt="Adding your Extra JSON" width="200"/>
 
 3.  In the sidebar under the relevent sections:
  * Edit the title, content
@@ -151,4 +150,4 @@ This is a terrific example about how complex or very custom use-cases can be dep
 ## Multiple Choice Survey as a List Row Insertion
 Another example is a combination of the survey and a List Row insertion. Try it out, it should/could look like this:
 
-<img src="./airbnb-main/img/Inline-Survey.gif" alt="Adding your Extra JSON" width="200"/>
+<img src="./screenshots/Inline-Survey.gif" alt="Adding your Extra JSON" width="200"/>
