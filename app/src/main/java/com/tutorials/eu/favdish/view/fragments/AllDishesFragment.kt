@@ -225,6 +225,9 @@ class AllDishesFragment : Fragment() {
                     arrayListOfDishes.add(favDish)
                 }
                 mFavDishAdapter.dishesList(arrayListOfDishes)
+                mBinding.rvDishesList.visibility = View.VISIBLE
+                mBinding.tvNoDishesAddedYet.visibility = View.GONE
+                mFavDishAdapter.dishesList(arrayListOfDishes)
             }
         }
         mFavDishViewModel.allDishesList.observe(viewLifecycleOwner) { dishes ->
