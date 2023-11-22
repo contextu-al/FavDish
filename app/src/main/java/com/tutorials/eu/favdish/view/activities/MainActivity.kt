@@ -1,5 +1,6 @@
 package com.tutorials.eu.favdish.view.activities
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -25,8 +26,11 @@ import androidx.work.WorkManager
 import com.contextu.al.BuildConfig
 import com.contextu.al.Contextual
 import com.contextu.al.core.CtxEventObserver
+import com.contextu.al.model.customguide.Feedback
+import com.google.gson.Gson
 import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.databinding.ActivityMainBinding
+import com.tutorials.eu.favdish.model.ContextualFeedbackModel
 import com.tutorials.eu.favdish.model.notification.NotifyWorker
 import com.tutorials.eu.favdish.utils.Constants
 import java.util.Date
@@ -86,17 +90,18 @@ class MainActivity : AppCompatActivity() {
         startWork()
 
         val checkedItems = booleanArrayOf(false, false, false, false)
-        val multiChoiceItems = arrayOf("Work", "Fun", "Learning", "Social")
         val customWidget = "MultipleChoiceCustom"
         Contextual.registerGuideBlock(customWidget).observe(this){ contextualContainer ->
             if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(customWidget)){
+                val multiChoiceItems = Gson().fromJson(contextualContainer.guidePayload.guide.feedBackData,
+                    ContextualFeedbackModel::class.java).c.toTypedArray()
+
                 AlertDialog.Builder(this@MainActivity)
-                    .setTitle("What do you usually use our app for?")
+                    .setTitle(contextualContainer.guidePayload.guide.feedBackTitle ?: "")
                     .setMultiChoiceItems(multiChoiceItems, checkedItems) { dialog, which, isChecked ->
 
                     }
                     .setPositiveButton("OK") { dialog, which ->
-
                     }
                     .create()
                     .show()
