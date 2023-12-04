@@ -10,19 +10,9 @@ Native android sample app developed by the contextual android team, used in test
 this is also the primary app used in testing CST conditions via BDD. 
 
 ### Build Instructions
-- make sure to follow contextual integration steps on our [docs](https://dashboard.pointzi.com/docs/sdks/android/integration/)
+- make sure to follow contextual integration steps on our [docs](https://docs.contextu.al/sdks/android/integration/)
 - after a successful build upload the app to AppCenter
 - verify test app meets [QA testing requirements](https://streethawk.atlassian.net/wiki/spaces/PPD/pages/1900707864/SDK+Testing+Requirements)
-
-To run this application on your device, simply run
-
-```
-./gradlew installProdDebug
-```
-
-The `app_key` for this app is `Favdish`, it can be found in `app/build.gradle`. You may have to change the `app_key` to your
-account's `app_key` for the application to work.
-
 
 To run this application on your device, simply run
 
