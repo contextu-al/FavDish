@@ -1,6 +1,5 @@
 package com.tutorials.eu.favdish.view.activities
 
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -28,6 +27,7 @@ import com.contextu.al.Contextual
 import com.contextu.al.core.CtxEventObserver
 import com.contextu.al.model.customguide.Feedback
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.databinding.ActivityMainBinding
 import com.tutorials.eu.favdish.model.ContextualFeedbackModel
@@ -95,13 +95,23 @@ class MainActivity : AppCompatActivity() {
             if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(customWidget)){
                 val multiChoiceItems = Gson().fromJson(contextualContainer.guidePayload.guide.feedBackData,
                     ContextualFeedbackModel::class.java).c.toTypedArray()
-
                 AlertDialog.Builder(this@MainActivity)
                     .setTitle(contextualContainer.guidePayload.guide.feedBackTitle ?: "")
                     .setMultiChoiceItems(multiChoiceItems, checkedItems) { dialog, which, isChecked ->
-
                     }
-                    .setPositiveButton("OK") { dialog, which ->
+                    .setPositiveButton("Dismiss") { dialog, which ->
+                        val jsonObject = JsonObject()
+
+                        val updatedMultiChoice = arrayListOf<String>()
+                        checkedItems.forEachIndexed { index, check ->
+                            if (check){
+                                updatedMultiChoice.add(multiChoiceItems[index])
+                            }
+                        }
+                        jsonObject.addProperty("any-other-custom-data", "Example custom data")
+                        contextualContainer.operations.submitFeedback(contextualContainer.guidePayload.guide.feedID,
+                            Feedback(contextualContainer.guidePayload.guide.feedBackTitle ?: "", updatedMultiChoice, jsonObject))
+
                     }
                     .create()
                     .show()
