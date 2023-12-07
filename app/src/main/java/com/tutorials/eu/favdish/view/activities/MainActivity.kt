@@ -111,6 +111,7 @@ class MainActivity : AppCompatActivity() {
                         jsonObject.addProperty("any-other-custom-data", "Example custom data")
                         contextualContainer.operations.submitFeedback(contextualContainer.guidePayload.guide.feedID,
                             Feedback(contextualContainer.guidePayload.guide.feedBackTitle ?: "", updatedMultiChoice, jsonObject))
+                        dialog.dismiss()
 
                     }
                     .create()
