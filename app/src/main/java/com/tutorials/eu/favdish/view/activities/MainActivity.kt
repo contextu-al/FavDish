@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         startWork()
 
         val checkedItems = booleanArrayOf(false, false, false, false)
-        val customWidget = "MultipleChoiceCustom"
+        val customWidget = "CustomMultipleChoice"
         Contextual.registerGuideBlock(customWidget).observe(this){ contextualContainer ->
             if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(customWidget)){
                 val multiChoiceItems = Gson().fromJson(contextualContainer.guidePayload.guide.feedBackData,
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                     .setTitle(contextualContainer.guidePayload.guide.feedBackTitle ?: "")
                     .setMultiChoiceItems(multiChoiceItems, checkedItems) { dialog, which, isChecked ->
                     }
-                    .setPositiveButton("Dismiss") { dialog, which ->
+                    .setPositiveButton("Submit") { dialog, which ->
                         val jsonObject = JsonObject()
 
                         val updatedMultiChoice = arrayListOf<String>()
