@@ -33,7 +33,10 @@ import com.tutorials.eu.favdish.databinding.ActivityMainBinding
 import com.tutorials.eu.favdish.model.ContextualFeedbackModel
 import com.tutorials.eu.favdish.model.notification.NotifyWorker
 import com.tutorials.eu.favdish.utils.Constants
+import java.time.LocalDateTime
+import java.time.format.TextStyle
 import java.util.Date
+import java.util.Locale
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
@@ -47,8 +50,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Contextual.init(application, getString(R.string.app_key), object : CtxEventObserver {
             override fun onInstallRegistered(installId: UUID, context: Context) {
+                val localDateTime = LocalDateTime.now()
+                val dayOfWeek = localDateTime.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+                val month = localDateTime.month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
                 Contextual.tagStringArray(mutableMapOf(
-                    "sh_cuid" to "favdish-dev-user ${Date()} | pz-${BuildConfig.CTX_VERSION_NAME}",
+                    "sh_cuid" to "favdish-dev-user ${dayOfWeek + " " + " " +  month + " " + localDateTime.dayOfMonth} | pz-${BuildConfig.CTX_VERSION_NAME}",
                     "sh_email" to "qa@contextu.al", "sh_first_name" to "QA",
                     "sh_last_name" to "Contextual"))
             }
