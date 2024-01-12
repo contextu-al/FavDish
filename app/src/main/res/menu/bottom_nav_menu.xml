@@ -14,4 +14,10 @@
         android:id="@+id/navigation_random_dish"
         android:icon="@drawable/ic_random_dish"
         android:title="@string/title_random_dish" />
+
+    <item
+        android:id="@+id/navigation_maps"
+        android:icon="@drawable/map"
+        android:title="Maps" />
+
 </menu>

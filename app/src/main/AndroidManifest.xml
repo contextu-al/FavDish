@@ -13,6 +13,8 @@ For WRITE EXTERNAL STORAGE warning you can have a look at this article I hope it
         android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -27,9 +29,6 @@ For WRITE EXTERNAL STORAGE warning you can have a look at this article I hope it
         android:supportsRtl="true"
         android:theme="@style/Theme.FavDish">
 
-        <meta-data
-            android:name="com.contextu.al.APP_KEY"
-            android:value="${app_key}"/>
 
         <!--Kept for compatibility reasons. SDK 2.x searches for pointzi -->
         <meta-data

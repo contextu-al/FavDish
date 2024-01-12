@@ -71,12 +71,20 @@
     <string name="action_share_dish">Share Dish</string>
 
     <!--TODO Step 6: Add the string values in the strings.xml-->
-    <!--START-->
+
     <string name="notification_title">Checkout new dish recipes</string>
     <string name="notification_subtitle">Tap for more detail</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar sapien a eleifend varius. Nunc commodo feugiat fringilla. Suspendisse arcu diam, aliquet id risus id, hendrerit porta turpis. Fusce ipsum mauris, tempus vitae neque a, molestie bibendum turpis. Quisque tincidunt tellus nisi, vitae aliquet massa auctor nec. Nam et vehicula.</string>
     <string name="create_tag_button">create_tag_button</string>
-    <!--END-->
+
+    <string-array name="tag_value">
+        <item>String Tag</item>
+        <item>Numeric Tag</item>
+        <item>Date Time Tag</item>
+    </string-array>
+
+    <string name="mapbox_access_token">pk.eyJ1IjoiZGFuaWVsLWNvbnRleHR1YWwiLCJhIjoiY2xud2Z6eDVmMDZxbzJqcmgxN3c3YWk4biJ9.r57g01JWO3zg1pN644uHhw</string>
+
 </resources>

@@ -30,8 +30,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
@@ -92,11 +93,14 @@ dependencies {
         }
     } else {
         // This is used by CI(dev and staging)
-        implementation (group: "com.pointzi.dev", name: "pointzi", version: getContextualSdkVersion()){
+        implementation(group: "com.pointzi.dev", name: "pointzi", version: getContextualSdkVersion()) {
             exclude group: 'com.github.bumptech.glide'
             exclude group: 'androidx.room'
         }
     }
+
+    implementation 'com.mapbox.maps:android:10.16.1'
+
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.7.0'

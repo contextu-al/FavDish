@@ -1,5 +1,6 @@
 package com.tutorials.eu.favdish.view.activities
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -7,6 +8,8 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -14,15 +17,27 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.*
-import com.pointzi.BuildConfig
-import com.pointzi.Pointzi.setUserId
-import com.pointzi.Pointzi.tagString
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import com.contextu.al.BuildConfig
+import com.contextu.al.Contextual
+import com.contextu.al.core.CtxEventObserver
+import com.contextu.al.model.customguide.Feedback
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.databinding.ActivityMainBinding
+import com.tutorials.eu.favdish.model.ContextualFeedbackModel
 import com.tutorials.eu.favdish.model.notification.NotifyWorker
 import com.tutorials.eu.favdish.utils.Constants
-import java.util.*
+import java.time.LocalDateTime
+import java.time.format.TextStyle
+import java.util.Date
+import java.util.Locale
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -33,13 +48,22 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Contextual.init(application, getString(R.string.app_key), object : CtxEventObserver {
+            override fun onInstallRegistered(installId: UUID, context: Context) {
+                val localDateTime = LocalDateTime.now()
+                val dayOfWeek = localDateTime.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+                val month = localDateTime.month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+                Contextual.tagStringArray(mutableMapOf(
+                    "sh_cuid" to "favdish-dev-user ${dayOfWeek + " " + " " +  month + " " + localDateTime.dayOfMonth} | pz-${BuildConfig.CTX_VERSION_NAME}",
+                    "sh_email" to "qa@contextu.al", "sh_first_name" to "QA",
+                    "sh_last_name" to "Contextual"))
+            }
 
-        setUserId("favdish-dev-user ${Date()} | pz-${BuildConfig.PZ_VERSION_NAME}")
-        tagString("sh_email", "qa@contextu.al")
-        tagString("sh_gender", "female")
-        tagString("sh_first_name", "QA")
-        tagString("sh_last_name", "Contextual")
-        tagString("sh_phone", "+1-415-802-2600")
+            override fun onInstallRegisterError(errorMsg: String) {
+                Toast.makeText(application, errorMsg, Toast.LENGTH_LONG).show()
+            }
+        })
+
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
@@ -52,7 +76,8 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.navigation_all_dishes,
                 R.id.navigation_favorite_dishes,
-                R.id.navigation_random_dish
+                R.id.navigation_random_dish,
+                R.id.navigation_maps
             )
         )
         setupActionBarWithNavController(mNavController, appBarConfiguration)
@@ -69,6 +94,36 @@ class MainActivity : AppCompatActivity() {
         }
         // END
         startWork()
+
+        val checkedItems = booleanArrayOf(false, false, false, false)
+        val customWidget = "CustomMultipleChoice"
+        Contextual.registerGuideBlock(customWidget).observe(this){ contextualContainer ->
+            if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(customWidget)){
+                val multiChoiceItems = Gson().fromJson(contextualContainer.guidePayload.guide.feedBackData,
+                    ContextualFeedbackModel::class.java).c.toTypedArray()
+                AlertDialog.Builder(this@MainActivity)
+                    .setTitle(contextualContainer.guidePayload.guide.feedBackTitle ?: "")
+                    .setMultiChoiceItems(multiChoiceItems, checkedItems) { dialog, which, isChecked ->
+                    }
+                    .setPositiveButton("Submit") { dialog, which ->
+                        val jsonObject = JsonObject()
+
+                        val updatedMultiChoice = arrayListOf<String>()
+                        checkedItems.forEachIndexed { index, check ->
+                            if (check){
+                                updatedMultiChoice.add(multiChoiceItems[index])
+                            }
+                        }
+                        jsonObject.addProperty("any-other-custom-data", "Example custom data")
+                        contextualContainer.operations.submitFeedback(contextualContainer.guidePayload.guide.feedID,
+                            Feedback(contextualContainer.guidePayload.guide.feedBackTitle ?: "", updatedMultiChoice, jsonObject))
+                        dialog.dismiss()
+
+                    }
+                    .create()
+                    .show()
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

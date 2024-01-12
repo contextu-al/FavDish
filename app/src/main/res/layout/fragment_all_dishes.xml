@@ -36,6 +36,16 @@
             app:elevation="0dp"
             app:fabSize="mini" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/sdk_extension"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="sdk_extension"
+            android:src="@drawable/comment"
+            app:backgroundTint="#ffffff"
+            app:elevation="20dp"
+            app:fabSize="mini" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
