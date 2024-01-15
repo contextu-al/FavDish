@@ -163,6 +163,7 @@ dependencies {
 def getCurrentFlavor() {
     Gradle gradle = getGradle()
     String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+    print("DEBUG tskReqStr:   " + tskReqStr)
     if (tskReqStr.contains("prod")) {
         return "prod"
     } else if(tskReqStr.contains("LocalDev")) {
