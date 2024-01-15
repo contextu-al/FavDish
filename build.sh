@@ -89,6 +89,8 @@ if [ "$GIT_BRANCH" = "staging" ]; then
   APK_LOCATION=app/build/outputs/apk/staging/debug/app-staging-debug.apk
 # Production
 elif [ "$GIT_BRANCH" = "main" ]; then
+  # Remove project(":contextual").projectDir = file("../contextual-sdk-android") from settings.gradle
+  sed -i '3d' settings.gradle
   SDK_ENV='Prod'
   ./gradlew assembleProdDebug
   APK_LOCATION=app/build/outputs/apk/prod/debug/app-prod-debug.apk
