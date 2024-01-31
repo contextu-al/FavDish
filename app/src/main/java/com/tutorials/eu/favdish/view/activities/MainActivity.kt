@@ -153,7 +153,9 @@ class MainActivity : AppCompatActivity() {
                         contextualContainer.operations.submitFeedback(contextualContainer.guidePayload.guide.feedID,
                             Feedback(contextualContainer.guidePayload.guide.feedBackTitle ?: "", updatedMultiChoice, jsonObject))
                         dialog.dismiss()
-                        promptUserForInput("Please explain why you chose this ?")
+                        if(feedBackData.i == 1){
+                            promptUserForInput("Please explain why you chose this ?")
+                        }
                     }
                     .create()
                     .show()
