@@ -134,15 +134,15 @@ class MainActivity : AppCompatActivity() {
         Contextual.registerGuideBlock(customWidget).observe(this){ contextualContainer ->
             if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(customWidget) && !hasShown){
                 hasShown = true
-                val multiChoiceItems = Gson().fromJson(contextualContainer.guidePayload.guide.feedBackData,
-                    ContextualFeedbackModel::class.java).c.toTypedArray()
+                val feedBackData = Gson().fromJson(contextualContainer.guidePayload.guide.feedBackData,
+                    ContextualFeedbackModel::class.java)
+                val multiChoiceItems = feedBackData.c.toTypedArray()
                 AlertDialog.Builder(this@MainActivity)
                     .setTitle(contextualContainer.guidePayload.guide.feedBackTitle ?: "")
                     .setMultiChoiceItems(multiChoiceItems, checkedItems) { dialog, which, isChecked ->
                     }
                     .setPositiveButton("Submit") { dialog, which ->
                         val jsonObject = JsonObject()
-
                         val updatedMultiChoice = arrayListOf<String>()
                         checkedItems.forEachIndexed { index, check ->
                             if (check){
@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity() {
                         contextualContainer.operations.submitFeedback(contextualContainer.guidePayload.guide.feedID,
                             Feedback(contextualContainer.guidePayload.guide.feedBackTitle ?: "", updatedMultiChoice, jsonObject))
                         dialog.dismiss()
-
+                        promptUserForInput("Please explain why you chose this ?")
                     }
                     .create()
                     .show()
@@ -161,6 +161,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun promptUserForInput(textTitle: String){
+        AlertDialog.Builder(this@MainActivity)
+            .setTitle(textTitle)
+            .setView(R.layout.dialog_guideblock)
+            .setPositiveButton("Send") { dialog, which ->
+
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(mNavController, null)
     }
