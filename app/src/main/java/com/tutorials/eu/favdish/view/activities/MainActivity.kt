@@ -35,7 +35,6 @@ import com.tutorials.eu.favdish.model.notification.NotifyWorker
 import com.tutorials.eu.favdish.utils.Constants
 import java.time.LocalDateTime
 import java.time.format.TextStyle
-import java.util.Date
 import java.util.Locale
 import java.util.UUID
 import java.util.concurrent.TimeUnit
@@ -48,7 +47,39 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Contextual.init(application, getString(R.string.app_key), object : CtxEventObserver {
+
+
+//        // Step 1
+//        val step1 = CustomTourBuilder.Builder()
+//            .setTemplate("SRA")
+//            .setText("Test title SRA")
+//            .setContainerHeight(30)
+//            .setContainerWidth(30)
+//            .setContent("Test SRA Content")
+//            .build()
+//
+//
+//        // Step 2
+//        val step2 = CustomTourBuilder.Builder()
+//            .setTemplate("SRAWithContentAndDismiss")
+//            .setText("Test Text")
+//            .setContainerHeight(100)
+//            .setContainerWidth(100)
+//            .setContent("Test Content")
+//            .build()
+//
+//        // Step 3
+//        val step3 = CustomTourBuilder.Builder()
+//            .setTemplate("SRAWithContentBackAndNext")
+//            .setText("Test Text")
+//            .setContainerHeight(100)
+//            .setContainerWidth(100)
+//            .setContent("Test Content")
+//            .build()
+
+
+
+        Contextual.init(application, "FavDish", object : CtxEventObserver {
             override fun onInstallRegistered(installId: UUID, context: Context) {
                 val localDateTime = LocalDateTime.now()
                 val dayOfWeek = localDateTime.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
@@ -57,6 +88,8 @@ class MainActivity : AppCompatActivity() {
                     "sh_cuid" to "favdish-dev-user ${dayOfWeek + " " + " " +  month + " " + localDateTime.dayOfMonth} | pz-${BuildConfig.CTX_VERSION_NAME}",
                     "sh_email" to "qa@contextu.al", "sh_first_name" to "QA",
                     "sh_last_name" to "Contextual"))
+
+                //Contextual.addGuide(arrayListOf(step1, step2, step3))
             }
 
             override fun onInstallRegisterError(errorMsg: String) {
@@ -97,8 +130,10 @@ class MainActivity : AppCompatActivity() {
 
         val checkedItems = booleanArrayOf(false, false, false, false)
         val customWidget = "CustomMultipleChoice"
+        var hasShown = false
         Contextual.registerGuideBlock(customWidget).observe(this){ contextualContainer ->
-            if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(customWidget)){
+            if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(customWidget) && !hasShown){
+                hasShown = true
                 val multiChoiceItems = Gson().fromJson(contextualContainer.guidePayload.guide.feedBackData,
                     ContextualFeedbackModel::class.java).c.toTypedArray()
                 AlertDialog.Builder(this@MainActivity)
