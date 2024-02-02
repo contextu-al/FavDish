@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                     "sh_cuid" to "favdish-dev-user ${dayOfWeek + " " + " " +  month + " " + localDateTime.dayOfMonth} | pz-${BuildConfig.CTX_VERSION_NAME}",
                     "sh_email" to "qa@contextu.al", "sh_first_name" to "QA",
                     "sh_last_name" to "Contextual"))
-                ConfettiGuideBlocks(this@MainActivity).show()
+
             }
 
             override fun onInstallRegisterError(errorMsg: String) {
@@ -66,6 +66,14 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+
+        val confettiGuideBlocks = "confetti"
+
+        Contextual.registerGuideBlock(confettiGuideBlocks).observe(this){ contextualContainer ->
+            if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(confettiGuideBlocks)){
+                ConfettiGuideBlocks(this@MainActivity).show()
+            }
+        }
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
