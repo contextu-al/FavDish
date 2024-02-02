@@ -15,7 +15,7 @@ def static getDate() {
 
 android {
     compileSdkVersion 33
-    buildToolsVersion "30.0.3"
+    buildToolsVersion "31.0.0"
 
     defaultConfig {
         applicationId "pointzi.dishapp"
@@ -100,6 +100,10 @@ dependencies {
     }
 
     implementation 'com.mapbox.maps:android:10.16.1'
+    implementation 'com.github.GuideBlocks-org:Android-GuideBlocks:0.0.4', {
+        exclude group: 'com.google.android.material'
+        exclude group: 'com.github.bumptech.glide'
+    }
 
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

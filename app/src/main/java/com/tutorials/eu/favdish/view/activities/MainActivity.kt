@@ -24,6 +24,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.contextu.al.BuildConfig
 import com.contextu.al.Contextual
+import com.contextu.al.confetti.ConfettiGuideBlocks
 import com.contextu.al.core.CtxEventObserver
 import com.contextu.al.model.customguide.Feedback
 import com.google.gson.Gson
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity() {
                     "sh_cuid" to "favdish-dev-user ${dayOfWeek + " " + " " +  month + " " + localDateTime.dayOfMonth} | pz-${BuildConfig.CTX_VERSION_NAME}",
                     "sh_email" to "qa@contextu.al", "sh_first_name" to "QA",
                     "sh_last_name" to "Contextual"))
+                ConfettiGuideBlocks(this@MainActivity).show()
             }
 
             override fun onInstallRegisterError(errorMsg: String) {
