@@ -31,12 +31,6 @@ For WRITE EXTERNAL STORAGE warning you can have a look at this article I hope it
         tools:replace="android:theme"
         android:theme="@style/Theme.FavDish">
 
-
-        <!--Kept for compatibility reasons. SDK 2.x searches for pointzi -->
-        <meta-data
-            android:name="com.pointzi.APP_KEY"
-            android:value="${app_key}"/>
-
         <activity
             android:name=".view.activities.DrawerActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
