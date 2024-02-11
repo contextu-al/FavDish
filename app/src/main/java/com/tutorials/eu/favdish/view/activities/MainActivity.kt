@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
         startWork()
 
         val checkedItems = booleanArrayOf(false, false, false, false)
-        val customWidget = "CustomMultipleChoice"
+        val customWidget = "MultiSelectSurvey"
         var hasShown = false
         Contextual.registerGuideBlock(customWidget).observe(this){ contextualContainer ->
             if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(customWidget) && !hasShown){
