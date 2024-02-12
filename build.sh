@@ -1,5 +1,13 @@
 #!/bin/sh -x
 
+if [ "$should_setup_emulator" == "true" ]; then
+  sdkmanager --install 'system-images;android-TiramisuPrivacySandbox;google_apis_playstore;x86_64'
+  sdkmanager --install emulator
+  echo "no" | avdmanager --verbose create avd --force --name "contextual_sdk_emulator" --package "system-images;android-TiramisuPrivacySandbox;google_apis_playstore;x86_64"
+  /opt/sdk/emulator/emulator -avd contextual_sdk_emulator -noaudio -no-boot-anim -netdelay none -accel on -no-window -no-snapshot -gpu swiftshader_indirect
+fi
+
+
 # If user has set CONTEXTUAL_SDK_VERSION in environment, it will be used.
 if [ "$CONTEXTUAL_SDK_VERSION" ]; then
     echo "VERSION_NAME=${CONTEXTUAL_SDK_VERSION}" >> local.properties
@@ -81,6 +89,8 @@ if [ "$GIT_BRANCH" = "staging" ]; then
   APK_LOCATION=app/build/outputs/apk/staging/debug/app-staging-debug.apk
 # Production
 elif [ "$GIT_BRANCH" = "main" ]; then
+  # This removes `project(":contextual").projectDir = file("../contextual-sdk-android")` from settings.gradle
+  sed -i '3d' settings.gradle
   SDK_ENV='Prod'
   ./gradlew assembleProdDebug
   APK_LOCATION=app/build/outputs/apk/prod/debug/app-prod-debug.apk

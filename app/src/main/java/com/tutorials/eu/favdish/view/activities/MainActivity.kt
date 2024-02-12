@@ -24,6 +24,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.contextu.al.BuildConfig
 import com.contextu.al.Contextual
+import com.contextu.al.confetti.ConfettiGuideBlocks
 import com.contextu.al.core.CtxEventObserver
 import com.contextu.al.model.customguide.Feedback
 import com.google.gson.Gson
@@ -48,37 +49,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-//        // Step 1
-//        val step1 = CustomTourBuilder.Builder()
-//            .setTemplate("SRA")
-//            .setText("Test title SRA")
-//            .setContainerHeight(30)
-//            .setContainerWidth(30)
-//            .setContent("Test SRA Content")
-//            .build()
-//
-//
-//        // Step 2
-//        val step2 = CustomTourBuilder.Builder()
-//            .setTemplate("SRAWithContentAndDismiss")
-//            .setText("Test Text")
-//            .setContainerHeight(100)
-//            .setContainerWidth(100)
-//            .setContent("Test Content")
-//            .build()
-//
-//        // Step 3
-//        val step3 = CustomTourBuilder.Builder()
-//            .setTemplate("SRAWithContentBackAndNext")
-//            .setText("Test Text")
-//            .setContainerHeight(100)
-//            .setContainerWidth(100)
-//            .setContent("Test Content")
-//            .build()
-
-
-
         Contextual.init(application, "FavDish", object : CtxEventObserver {
             override fun onInstallRegistered(installId: UUID, context: Context) {
                 val localDateTime = LocalDateTime.now()
@@ -88,8 +58,6 @@ class MainActivity : AppCompatActivity() {
                     "sh_cuid" to "favdish-dev-user ${dayOfWeek + " " + " " +  month + " " + localDateTime.dayOfMonth} | pz-${BuildConfig.CTX_VERSION_NAME}",
                     "sh_email" to "qa@contextu.al", "sh_first_name" to "QA",
                     "sh_last_name" to "Contextual"))
-
-                //Contextual.addGuide(arrayListOf(step1, step2, step3))
             }
 
             override fun onInstallRegisterError(errorMsg: String) {
@@ -97,6 +65,14 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+
+        val confettiGuideBlocks = "confetti"
+
+        Contextual.registerGuideBlock(confettiGuideBlocks).observe(this){ contextualContainer ->
+            if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(confettiGuideBlocks)){
+                ConfettiGuideBlocks(this@MainActivity).show()
+            }
+        }
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)

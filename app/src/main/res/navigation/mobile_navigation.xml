@@ -54,10 +54,4 @@
             android:name="dishDetails"
             app:argType="com.tutorials.eu.favdish.model.entities.FavDish" />
     </fragment>
-
-    <fragment
-        android:id="@+id/navigation_maps"
-        android:name="com.tutorials.eu.favdish.view.fragments.MapboxFragment"
-        android:label="Mapbox Fragment"
-        tools:layout="@layout/fragment_mapbox" />
 </navigation>
