@@ -4,17 +4,21 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.*
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.contextu.al.Contextual
+import com.contextu.al.fancyannouncement.FancyAnnouncementGuideBlocks
+import com.contextu.al.model.ui.Image
 import com.tutorials.eu.favdish.R
 import com.tutorials.eu.favdish.application.FavDishApplication
 import com.tutorials.eu.favdish.databinding.DialogCustomListBinding
@@ -246,25 +250,6 @@ class AllDishesFragment : Fragment() {
                     mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
                 }
             }
-        }
-        val fancyAnnouncement = "FancyAnnouncement"
-        Contextual.registerGuideBlock(fancyAnnouncement).observe(viewLifecycleOwner){ contextualContainer ->
-            if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(fancyAnnouncement)){
-                val alertDialogBuilder = AlertDialog.Builder(requireContext())
-                alertDialogBuilder.setView(R.layout.favdish_custom_dialog)
-                val alertDialog = alertDialogBuilder.create()
-                alertDialog.show()
-
-                alertDialog.findViewById<TextView>(R.id.title)?.text = "Fancy Announcement"
-                alertDialog.findViewById<TextView>(R.id.message)?.text = "This is a basic example of a custom implementation of a contextual guide"
-                val imageView = alertDialog.findViewById<ImageView>(R.id.customDialogImageView)
-                imageView?.let { customImageView ->
-                    Glide.with(this)
-                        .load("https://staging.contextu.al/static-image/assets/img/icons/FlatIcons/Party/dinner.png")
-                        .into(customImageView)
-                }
-            }
-
         }
     }
 

@@ -26,7 +26,9 @@ import com.contextu.al.BuildConfig
 import com.contextu.al.Contextual
 import com.contextu.al.confetti.ConfettiGuideBlocks
 import com.contextu.al.core.CtxEventObserver
+import com.contextu.al.fancyannouncement.FancyAnnouncementGuideBlocks
 import com.contextu.al.model.customguide.Feedback
+import com.contextu.al.model.ui.Image
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.tutorials.eu.favdish.R
@@ -138,6 +140,48 @@ class MainActivity : AppCompatActivity() {
                     val baseView = findViewById<View>(android.R.id.content)
                     contextualContainer.guidePayload.nextStep.onClick(baseView)
                 })
+            }
+        }
+
+        val fancyAnnouncement = "FancyAnnouncement"
+        Contextual.registerGuideBlock(fancyAnnouncement).observe(this){ contextualContainer ->
+            if (contextualContainer.guidePayload.guide.guideBlock.contentEquals(fancyAnnouncement)) {
+                val title = contextualContainer.guidePayload.guide.titleText.text
+                val message = contextualContainer.guidePayload.guide.contentText.text
+
+                val prevButtonText =
+                    contextualContainer.guidePayload.guide.buttons.prevButton!!.text
+                val nextButtonText =
+                    contextualContainer.guidePayload.guide.buttons.nextButton!!.text
+                val negativeText = prevButtonText ?: "back"
+                val positiveText = nextButtonText ?: "next"
+                var imageURL: String?
+
+                val images: List<Image> = contextualContainer.guidePayload.guide.images
+                if (images.stream().count() > 0) {
+                    imageURL = images[0].resource
+                }
+
+                val guideBlock = FancyAnnouncementGuideBlocks(this)
+
+                guideBlock.show(
+                    title!!,
+                    message!!,
+                    negativeText,
+                    { v: View? ->
+                        contextualContainer.guidePayload.prevStep.onClick(v)
+                        contextualContainer.guidePayload.dismissGuide.onClick(v)
+                        guideBlock.dismiss()
+                        contextualContainer.tagManager.setStringTag("test_key", "test_value")
+                    },
+                    positiveText,
+                    { v: View? ->
+                        contextualContainer.guidePayload.nextStep.onClick(v)
+                        contextualContainer.guidePayload.dismissGuide.onClick(v)
+                        guideBlock.dismiss()
+                    },
+                    ""
+                )
             }
         }
     }
