@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Contextual.init(application, "FavDish", object : CtxEventObserver {
+        Contextual.init(application, getString(R.string.app_key), object : CtxEventObserver {
             override fun onInstallRegistered(installId: UUID, context: Context) {
                 val localDateTime = LocalDateTime.now()
                 val dayOfWeek = localDateTime.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
@@ -65,14 +65,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
-        val confettiGuideBlocks = "confetti"
-
-        Contextual.registerGuideBlock(confettiGuideBlocks).observe(this){ contextualContainer ->
-            if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(confettiGuideBlocks)){
-                ConfettiGuideBlocks(this@MainActivity).show()
-            }
-        }
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
@@ -135,6 +127,17 @@ class MainActivity : AppCompatActivity() {
                     }
                     .create()
                     .show()
+            }
+        }
+        val confettiGuideBlocks = "confetti"
+
+        Contextual.registerGuideBlock(confettiGuideBlocks).observe(this){ contextualContainer ->
+            if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(confettiGuideBlocks)){
+                val confettiView = ConfettiGuideBlocks(this@MainActivity)
+                confettiView.show({}, {
+                    val baseView = findViewById<View>(android.R.id.content)
+                    contextualContainer.guidePayload.nextStep.onClick(baseView)
+                })
             }
         }
     }

@@ -36,8 +36,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     packagingOptions {
@@ -45,7 +45,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
 
     buildFeatures {
@@ -101,11 +101,10 @@ dependencies {
     }
 
 
-    implementation 'com.github.GuideBlocks-org:Android-GuideBlocks:0.0.4', {
+    implementation 'com.github.GuideBlocks-org:Android-GuideBlocks:0.0.11', {
         exclude group: 'com.google.android.material'
         exclude group: 'com.github.bumptech.glide'
     }
-
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.7.0'
