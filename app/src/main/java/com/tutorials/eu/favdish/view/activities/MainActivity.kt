@@ -99,10 +99,10 @@ class MainActivity : AppCompatActivity() {
         startWork()
 
         val checkedItems = booleanArrayOf(false, false, false, false)
-        val customWidget = "MultiSelectSurvey"
+        val multiSelectSurvey = "MultiSelectSurvey"
         var hasShown = false
-        Contextual.registerGuideBlock(customWidget).observe(this){ contextualContainer ->
-            if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(customWidget) && !hasShown){
+        Contextual.registerGuideBlock(multiSelectSurvey).observe(this){ contextualContainer ->
+            if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(multiSelectSurvey) && !hasShown){
                 hasShown = true
                 val feedBackData = Gson().fromJson(contextualContainer.guidePayload.guide.feedBackData,
                     ContextualFeedbackModel::class.java)
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
                         contextualContainer.operations.submitFeedback(contextualContainer.guidePayload.guide.feedID,
                             Feedback(contextualContainer.guidePayload.guide.feedBackTitle ?: "", updatedMultiChoice, jsonObject))
                         dialog.dismiss()
-                        if(feedBackData.i == 1){
+                        if (feedBackData.i == 1) {
                             promptUserForInput("Please explain why you chose this ?")
                         }
                     }
@@ -131,8 +131,8 @@ class MainActivity : AppCompatActivity() {
                     .show()
             }
         }
-        val confettiGuideBlocks = "confetti"
 
+        val confettiGuideBlocks = "confetti"
         Contextual.registerGuideBlock(confettiGuideBlocks).observe(this){ contextualContainer ->
             if(contextualContainer.guidePayload.guide.guideBlock.contentEquals(confettiGuideBlocks)){
                 val confettiView = ConfettiGuideBlocks(this@MainActivity)
@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity() {
                     contextualContainer.guidePayload.guide.buttons.nextButton!!.text
                 val negativeText = prevButtonText ?: "back"
                 val positiveText = nextButtonText ?: "next"
-                var imageURL: String?
+                var imageURL: String? = null
 
                 val images: List<Image> = contextualContainer.guidePayload.guide.images
                 if (images.stream().count() > 0) {
@@ -180,7 +180,7 @@ class MainActivity : AppCompatActivity() {
                         contextualContainer.guidePayload.dismissGuide.onClick(v)
                         guideBlock.dismiss()
                     },
-                    ""
+                    imageURL ?: ""
                 )
             }
         }
