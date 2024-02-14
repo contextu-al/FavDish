@@ -111,6 +111,7 @@ class AllDishesFragment : Fragment() {
                 }
             }
         }
+        loadComposeView()
     }
 
     override fun onResume() {
