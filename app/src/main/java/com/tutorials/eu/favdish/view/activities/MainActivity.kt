@@ -146,8 +146,8 @@ class MainActivity : AppCompatActivity() {
         val fancyAnnouncement = "FancyAnnouncement"
         Contextual.registerGuideBlock(fancyAnnouncement).observe(this){ contextualContainer ->
             if (contextualContainer.guidePayload.guide.guideBlock.contentEquals(fancyAnnouncement)) {
-                val title = contextualContainer.guidePayload.guide.titleText.text
-                val message = contextualContainer.guidePayload.guide.contentText.text
+                val title = contextualContainer.guidePayload.guide.titleText.text ?: ""
+                val message = contextualContainer.guidePayload.guide.contentText.text ?: ""
 
                 val prevButtonText =
                     contextualContainer.guidePayload.guide.buttons.prevButton!!.text
@@ -165,8 +165,8 @@ class MainActivity : AppCompatActivity() {
                 val guideBlock = FancyAnnouncementGuideBlocks(this)
 
                 guideBlock.show(
-                    title!!,
-                    message!!,
+                    title,
+                    message,
                     negativeText,
                     { v: View? ->
                         contextualContainer.guidePayload.prevStep.onClick(v)
