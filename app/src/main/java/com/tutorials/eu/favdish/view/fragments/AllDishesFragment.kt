@@ -11,6 +11,12 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -31,6 +37,7 @@ import com.tutorials.eu.favdish.view.activities.DrawerActivity
 import com.tutorials.eu.favdish.view.activities.MainActivity
 import com.tutorials.eu.favdish.view.adapters.CustomListItemAdapter
 import com.tutorials.eu.favdish.view.adapters.FavDishAdapter
+import com.tutorials.eu.favdish.view.compose.ComposeComponents
 import com.tutorials.eu.favdish.viewmodel.FavDishViewModel
 import com.tutorials.eu.favdish.viewmodel.FavDishViewModelFactory
 
@@ -104,6 +111,7 @@ class AllDishesFragment : Fragment() {
                 }
             }
         }
+        loadComposeView()
     }
 
     override fun onResume() {
@@ -262,6 +270,17 @@ class AllDishesFragment : Fragment() {
                         }
                     }
                 }
+        }
+    }
+
+    private fun loadComposeView() {
+        mBinding.composeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                MaterialTheme {
+                    ComposeComponents(modifier = Modifier.fillMaxWidth().padding(top = 8.dp))
+                }
+            }
         }
     }
 }
