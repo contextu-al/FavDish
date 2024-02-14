@@ -149,16 +149,24 @@ class MainActivity : AppCompatActivity() {
                 val title = contextualContainer.guidePayload.guide.titleText.text ?: ""
                 val message = contextualContainer.guidePayload.guide.contentText.text ?: ""
 
-                val prevButtonText =
-                    contextualContainer.guidePayload.guide.buttons.prevButton!!.text
-                val nextButtonText =
-                    contextualContainer.guidePayload.guide.buttons.nextButton!!.text
-                val negativeText = prevButtonText ?: "back"
-                val positiveText = nextButtonText ?: "next"
+                val buttons = contextualContainer.guidePayload.guide.buttons
+                var prevButtonText = "back"
+                var nextButtonText = "next"
+
+                buttons.prevButton?.let { button ->
+                    prevButtonText = button.text ?: "back"
+                }
+
+                buttons.nextButton?.let { button ->
+                    nextButtonText = button.text ?: "next"
+                }
+                val negativeText = prevButtonText
+                val positiveText = nextButtonText
+
                 var imageURL: String? = null
 
-                val images: List<Image> = contextualContainer.guidePayload.guide.images
-                if (images.stream().count() > 0) {
+                val images = contextualContainer.guidePayload.guide.images
+                if (images.isNotEmpty()) {
                     imageURL = images[0].resource
                 }
 
