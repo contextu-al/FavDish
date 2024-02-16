@@ -11,6 +11,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -29,6 +31,7 @@ import com.contextu.al.core.CtxEventObserver
 import com.contextu.al.fancyannouncement.FancyAnnouncementGuideBlocks
 import com.contextu.al.model.customguide.Feedback
 import com.contextu.al.model.ui.Image
+import com.contextu.al.openchecklist.OpenChecklist
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.tutorials.eu.favdish.R
@@ -190,6 +193,30 @@ class MainActivity : AppCompatActivity() {
                     },
                     imageURL ?: ""
                 )
+            }
+        }
+
+        val openChecklist = "OpenChecklist"
+        Contextual.registerGuideBlock(openChecklist).observe(this){ contextualContainer ->
+            if (contextualContainer.guidePayload.guide.guideBlock.contentEquals(openChecklist)) {
+                val title = contextualContainer.guidePayload.guide.titleText.text ?: "TODO list"
+                val payload = contextualContainer.guidePayload.guide.extraJson ?: ""
+
+                mBinding.composeView.apply {
+                    setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                    setContent {
+                        MaterialTheme {
+                            OpenChecklist(
+                                title = title,
+                                payload = payload,
+                                setTag = { key, value ->
+                                    contextualContainer.tagManager.setStringTag(key, value)
+                                },
+                                dismiss = {}
+                            )
+                        }
+                    }
+                }
             }
         }
     }
