@@ -199,20 +199,15 @@ class MainActivity : AppCompatActivity() {
         val openChecklist = "OpenChecklist"
         Contextual.registerGuideBlock(openChecklist).observe(this){ contextualContainer ->
             if (contextualContainer.guidePayload.guide.guideBlock.contentEquals(openChecklist)) {
-                val title = contextualContainer.guidePayload.guide.titleText.text ?: "TODO list"
-                val payload = contextualContainer.guidePayload.guide.extraJson ?: ""
-
                 mBinding.composeView.apply {
                     setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
                     setContent {
                         MaterialTheme {
                             OpenChecklist(
-                                title = title,
-                                payload = payload,
-                                setTag = { key, value ->
-                                    contextualContainer.tagManager.setStringTag(key, value)
-                                },
-                                dismiss = {}
+                                contextualContainer = contextualContainer,
+                                deepLink = { deepLink ->
+                                    //TODO implement go to screen action
+                                }
                             )
                         }
                     }
