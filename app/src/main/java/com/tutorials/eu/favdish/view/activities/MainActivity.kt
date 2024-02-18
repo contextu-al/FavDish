@@ -148,8 +148,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         val fancyAnnouncement = "FancyAnnouncement"
+        var hasShownFancyAnnouncement = false
         Contextual.registerGuideBlock(fancyAnnouncement).observe(this){ contextualContainer ->
-            if (contextualContainer.guidePayload.guide.guideBlock.contentEquals(fancyAnnouncement)) {
+            if (contextualContainer.guidePayload.guide.guideBlock.contentEquals(fancyAnnouncement) && !hasShownFancyAnnouncement) {
+                hasShownFancyAnnouncement = true
                 val title = contextualContainer.guidePayload.guide.titleText.text ?: ""
                 val message = contextualContainer.guidePayload.guide.contentText.text ?: ""
 
@@ -189,7 +191,14 @@ class MainActivity : AppCompatActivity() {
                             contextualContainer.tagManager.getTag("test_key").collectLatest { tags ->
                                 if(tags != null){
                                     runOnUiThread {
-                                        Toast.makeText(this@MainActivity, "Tagged value: " + tags.tagStringValue, Toast.LENGTH_LONG).show()
+                                        AlertDialog.Builder(this@MainActivity)
+                                            .setTitle("Tagged value")
+                                            .setMessage("test_key value is: " + tags.tagStringValue)
+                                            .setPositiveButton("OK") { dialog, which ->
+                                                dialog.dismiss()
+                                            }
+                                            .create()
+                                            .show()
                                     }
                                 }
                             }
