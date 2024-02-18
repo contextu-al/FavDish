@@ -28,7 +28,6 @@ import com.contextu.al.confetti.ConfettiGuideBlocks
 import com.contextu.al.core.CtxEventObserver
 import com.contextu.al.fancyannouncement.FancyAnnouncementGuideBlocks
 import com.contextu.al.model.customguide.Feedback
-import com.contextu.al.model.ui.Image
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.tutorials.eu.favdish.R
@@ -36,11 +35,16 @@ import com.tutorials.eu.favdish.databinding.ActivityMainBinding
 import com.tutorials.eu.favdish.model.ContextualFeedbackModel
 import com.tutorials.eu.favdish.model.notification.NotifyWorker
 import com.tutorials.eu.favdish.utils.Constants
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.TextStyle
 import java.util.Locale
 import java.util.UUID
 import java.util.concurrent.TimeUnit
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -60,6 +64,15 @@ class MainActivity : AppCompatActivity() {
                     "sh_cuid" to "favdish-dev-user ${dayOfWeek + " " + " " +  month + " " + localDateTime.dayOfMonth} | pz-${BuildConfig.CTX_VERSION_NAME}",
                     "sh_email" to "qa@contextu.al", "sh_first_name" to "QA",
                     "sh_last_name" to "Contextual"))
+                CoroutineScope(Dispatchers.IO).launch {
+                    Contextual.getTag("sh_first_name").collectLatest { tags ->
+                        if(tags != null){
+                            runOnUiThread {
+                                Toast.makeText(this@MainActivity, "sh_first_name value: " + tags.tagStringValue, Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    }
+                }
             }
 
             override fun onInstallRegisterError(errorMsg: String) {
@@ -181,6 +194,16 @@ class MainActivity : AppCompatActivity() {
                         contextualContainer.guidePayload.dismissGuide.onClick(v)
                         guideBlock.dismiss()
                         contextualContainer.tagManager.setStringTag("test_key", "test_value")
+                        CoroutineScope(Dispatchers.IO).launch {
+                            contextualContainer.tagManager.getTag("test_key").collectLatest { tags ->
+                                if(tags != null){
+                                    runOnUiThread {
+                                        Toast.makeText(this@MainActivity, "Tagged value: " + tags.tagStringValue, Toast.LENGTH_LONG).show()
+                                    }
+                                }
+                            }
+                        }
+
                     },
                     positiveText,
                     { v: View? ->
