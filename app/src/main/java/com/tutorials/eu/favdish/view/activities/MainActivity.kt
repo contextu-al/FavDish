@@ -64,15 +64,6 @@ class MainActivity : AppCompatActivity() {
                     "sh_cuid" to "favdish-dev-user ${dayOfWeek + " " + " " +  month + " " + localDateTime.dayOfMonth} | pz-${BuildConfig.CTX_VERSION_NAME}",
                     "sh_email" to "qa@contextu.al", "sh_first_name" to "QA",
                     "sh_last_name" to "Contextual"))
-                CoroutineScope(Dispatchers.IO).launch {
-                    Contextual.getTag("sh_first_name").collectLatest { tags ->
-                        if(tags != null){
-                            runOnUiThread {
-                                Toast.makeText(this@MainActivity, "sh_first_name value: " + tags.tagStringValue, Toast.LENGTH_LONG).show()
-                            }
-                        }
-                    }
-                }
             }
 
             override fun onInstallRegisterError(errorMsg: String) {
