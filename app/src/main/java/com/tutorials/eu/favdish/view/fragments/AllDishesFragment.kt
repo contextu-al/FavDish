@@ -149,7 +149,6 @@ class AllDishesFragment : Fragment() {
                     message,
                     negativeText,
                     { v: View? ->
-                        contextualContainer.guidePayload.prevStep.onClick(v)
                         contextualContainer.guidePayload.dismissGuide.onClick(v)
                         guideBlock.dismiss()
                         contextualContainer.tagManager.setStringTag("test_key", "test_value")
@@ -169,11 +168,9 @@ class AllDishesFragment : Fragment() {
                                 }
                             }
                         }
-
                     },
                     positiveText,
                     { v: View? ->
-                        contextualContainer.guidePayload.nextStep.onClick(v)
                         contextualContainer.guidePayload.dismissGuide.onClick(v)
                         guideBlock.dismiss()
                     },
