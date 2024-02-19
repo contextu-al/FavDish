@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,6 +34,12 @@ import com.tutorials.eu.favdish.view.adapters.CustomListItemAdapter
 import com.tutorials.eu.favdish.view.adapters.FavDishAdapter
 import com.tutorials.eu.favdish.viewmodel.FavDishViewModel
 import com.tutorials.eu.favdish.viewmodel.FavDishViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectIndexed
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 
 class AllDishesFragment : Fragment() {
 
@@ -102,6 +109,76 @@ class AllDishesFragment : Fragment() {
                     mBinding.rvDishesList.visibility = View.GONE
                     mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
                 }
+            }
+        }
+
+
+        val fancyAnnouncement = "FancyAnnouncement"
+        var hasShownFancyAnnouncement = false
+        Contextual.registerGuideBlock(fancyAnnouncement).observe(viewLifecycleOwner){ contextualContainer ->
+            if (contextualContainer.guidePayload.guide.guideBlock.contentEquals(fancyAnnouncement) && !hasShownFancyAnnouncement) {
+                hasShownFancyAnnouncement = true
+                val title = contextualContainer.guidePayload.guide.titleText.text ?: ""
+                val message = contextualContainer.guidePayload.guide.contentText.text ?: ""
+
+                val buttons = contextualContainer.guidePayload.guide.buttons
+                var prevButtonText = "back"
+                var nextButtonText = "next"
+
+                buttons.prevButton?.let { button ->
+                    prevButtonText = button.text ?: "back"
+                }
+
+                buttons.nextButton?.let { button ->
+                    nextButtonText = button.text ?: "next"
+                }
+                val negativeText = prevButtonText
+                val positiveText = nextButtonText
+
+                var imageURL: String? = null
+
+                val images = contextualContainer.guidePayload.guide.images
+                if (images.isNotEmpty()) {
+                    imageURL = images[0].resource
+                }
+
+                val guideBlock = FancyAnnouncementGuideBlocks(requireActivity())
+
+                guideBlock.show(
+                    title,
+                    message,
+                    negativeText,
+                    { v: View? ->
+                        contextualContainer.guidePayload.prevStep.onClick(v)
+                        contextualContainer.guidePayload.dismissGuide.onClick(v)
+                        guideBlock.dismiss()
+                        contextualContainer.tagManager.setStringTag("test_key", "test_value")
+                        CoroutineScope(Dispatchers.IO).launch {
+                            contextualContainer.tagManager.getTag("test_key").collectLatest { tags ->
+                                if(tags != null){
+                                    requireActivity().runOnUiThread {
+                                        AlertDialog.Builder(requireContext())
+                                            .setTitle("Tagged value")
+                                            .setMessage("test_key value is: " + tags.tagStringValue)
+                                            .setPositiveButton("OK") { dialog, which ->
+                                                dialog.dismiss()
+                                            }
+                                            .create()
+                                            .show()
+                                    }
+                                }
+                            }
+                        }
+
+                    },
+                    positiveText,
+                    { v: View? ->
+                        contextualContainer.guidePayload.nextStep.onClick(v)
+                        contextualContainer.guidePayload.dismissGuide.onClick(v)
+                        guideBlock.dismiss()
+                    },
+                    imageURL ?: ""
+                )
             }
         }
     }
