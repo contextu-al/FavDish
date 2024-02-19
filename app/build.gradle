@@ -175,7 +175,7 @@ def getCurrentFlavor() {
         return "staging"
     } else {
         // Invoked by CI
-        return "dev"
+        return "continuousIntegration"
     }
 }
 
