@@ -142,6 +142,10 @@ class MainActivity : AppCompatActivity() {
                 val confettiView = ConfettiGuideBlocks(this@MainActivity)
                 confettiView.show({}, {
                     val baseView = findViewById<View>(android.R.id.content)
+
+                    // "nextStep" informs the Contextual SDK that the user is accepting the guide or trying to go to next step (tapping Next or OK, etc)
+                    // If there is no next step in the guide, then the guide will be "complete" (and dismissed)
+                    // This provides an analytics update
                     contextualContainer.guidePayload.nextStep.onClick(baseView)
                 })
             }
@@ -182,7 +186,10 @@ class MainActivity : AppCompatActivity() {
                     message,
                     negativeText,
                     { v: View? ->
-                        contextualContainer.guidePayload.dismissGuide.onClick(v)
+                        // "prevStep" informs the Contextual SDK that the user is dismissing/cancelling or trying to go to previous step (tapping Back, Cancel, etc)
+                        // If there is no previous step in the guide, then the guide will be "rejected" (and dismissed)
+                        // This provides an analytics update
+                        contextualContainer.guidePayload.prevStep.onClick(v)
                         guideBlock.dismiss()
                         contextualContainer.tagManager.setStringTag("test_key", "test_value")
                         CoroutineScope(Dispatchers.IO).launch {
@@ -204,7 +211,10 @@ class MainActivity : AppCompatActivity() {
                     },
                     positiveText,
                     { v: View? ->
-                        contextualContainer.guidePayload.dismissGuide.onClick(v)
+                        // "nextStep" informs the Contextual SDK that the user is accepting the guide or trying to go to next step (tapping Next or OK, etc)
+                        // If there is no next step in the guide, then the guide will be "complete" (and dismissed)
+                        // This provides an analytics update
+                        contextualContainer.guidePayload.nextStep.onClick(v)
                         guideBlock.dismiss()
                     },
                     imageURL ?: ""
