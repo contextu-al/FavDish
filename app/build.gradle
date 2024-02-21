@@ -100,10 +100,10 @@ dependencies {
         }
     }
 
-
-    implementation 'com.github.GuideBlocks-org:Android-GuideBlocks:0.0.11', {
+    implementation 'com.github.GuideBlocks-org:Android-GuideBlocks:0.0.17', {
         exclude group: 'com.google.android.material'
         exclude group: 'com.github.bumptech.glide'
+        exclude group: 'com.contextu.al'
     }
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
