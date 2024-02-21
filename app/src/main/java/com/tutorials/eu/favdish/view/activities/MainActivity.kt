@@ -22,6 +22,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.bumptech.glide.Glide
 import com.contextu.al.BuildConfig
 import com.contextu.al.Contextual
 import com.contextu.al.confetti.ConfettiGuideBlocks
@@ -37,7 +38,6 @@ import com.tutorials.eu.favdish.model.notification.NotifyWorker
 import com.tutorials.eu.favdish.utils.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.TextStyle
@@ -65,7 +65,6 @@ class MainActivity : AppCompatActivity() {
                     "sh_email" to "qa@contextu.al", "sh_first_name" to "QA",
                     "sh_last_name" to "Contextual"))
             }
-
             override fun onInstallRegisterError(errorMsg: String) {
                 Toast.makeText(application, errorMsg, Toast.LENGTH_LONG).show()
             }
@@ -184,9 +183,8 @@ class MainActivity : AppCompatActivity() {
                     { v: View? ->
                         contextualContainer.guidePayload.dismissGuide.onClick(v)
                         guideBlock.dismiss()
-                        contextualContainer.tagManager.setStringTag("test_key", "test_value")
                         CoroutineScope(Dispatchers.IO).launch {
-                            contextualContainer.tagManager.getTag("test_key").collectLatest { tags ->
+                            contextualContainer.tagManager.getTag("test_key").collect { tags ->
                                 if(tags != null){
                                     runOnUiThread {
                                         AlertDialog.Builder(this@MainActivity)
@@ -204,7 +202,7 @@ class MainActivity : AppCompatActivity() {
                     },
                     positiveText,
                     { v: View? ->
-                        contextualContainer.guidePayload.dismissGuide.onClick(v)
+                        contextualContainer.guidePayload.nextStep.onClick(v)
                         guideBlock.dismiss()
                     },
                     imageURL ?: ""
