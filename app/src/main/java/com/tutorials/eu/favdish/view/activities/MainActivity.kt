@@ -11,6 +11,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -28,6 +30,8 @@ import com.contextu.al.confetti.ConfettiGuideBlocks
 import com.contextu.al.core.CtxEventObserver
 import com.contextu.al.fancyannouncement.FancyAnnouncementGuideBlocks
 import com.contextu.al.model.customguide.Feedback
+import com.contextu.al.model.ui.Image
+import com.contextu.al.openchecklist.OpenChecklist
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.tutorials.eu.favdish.R
@@ -35,16 +39,11 @@ import com.tutorials.eu.favdish.databinding.ActivityMainBinding
 import com.tutorials.eu.favdish.model.ContextualFeedbackModel
 import com.tutorials.eu.favdish.model.notification.NotifyWorker
 import com.tutorials.eu.favdish.utils.Constants
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.TextStyle
 import java.util.Locale
 import java.util.UUID
 import java.util.concurrent.TimeUnit
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -142,19 +141,14 @@ class MainActivity : AppCompatActivity() {
                 val confettiView = ConfettiGuideBlocks(this@MainActivity)
                 confettiView.show({}, {
                     val baseView = findViewById<View>(android.R.id.content)
-
-                    // "nextStep" informs the Contextual SDK that the user is accepting the guide or trying to go to next step (tapping Next or OK, etc)
-                    // If there is no next step in the guide, then the guide will be "complete" (and dismissed)
-                    // This provides an analytics update
                     contextualContainer.guidePayload.nextStep.onClick(baseView)
                 })
             }
         }
+
         val fancyAnnouncement = "FancyAnnouncement"
-        var hasShownFancyAnnouncement = false
         Contextual.registerGuideBlock(fancyAnnouncement).observe(this){ contextualContainer ->
-            if (contextualContainer.guidePayload.guide.guideBlock.contentEquals(fancyAnnouncement) && !hasShownFancyAnnouncement) {
-                hasShownFancyAnnouncement = true
+            if (contextualContainer.guidePayload.guide.guideBlock.contentEquals(fancyAnnouncement)) {
                 val title = contextualContainer.guidePayload.guide.titleText.text ?: ""
                 val message = contextualContainer.guidePayload.guide.contentText.text ?: ""
 
@@ -186,35 +180,15 @@ class MainActivity : AppCompatActivity() {
                     message,
                     negativeText,
                     { v: View? ->
-                        // "prevStep" informs the Contextual SDK that the user is dismissing/cancelling or trying to go to previous step (tapping Back, Cancel, etc)
-                        // If there is no previous step in the guide, then the guide will be "rejected" (and dismissed)
-                        // This provides an analytics update
                         contextualContainer.guidePayload.prevStep.onClick(v)
+                        contextualContainer.guidePayload.dismissGuide.onClick(v)
                         guideBlock.dismiss()
                         contextualContainer.tagManager.setStringTag("test_key", "test_value")
-                        CoroutineScope(Dispatchers.IO).launch {
-                            contextualContainer.tagManager.getTag("test_key").collectLatest { tags ->
-                                if(tags != null){
-                                    runOnUiThread {
-                                        AlertDialog.Builder(this@MainActivity)
-                                            .setTitle("Tagged value")
-                                            .setMessage("test_key value is: " + tags.tagStringValue)
-                                            .setPositiveButton("OK") { dialog, which ->
-                                                dialog.dismiss()
-                                            }
-                                            .create()
-                                            .show()
-                                    }
-                                }
-                            }
-                        }
                     },
                     positiveText,
                     { v: View? ->
-                        // "nextStep" informs the Contextual SDK that the user is accepting the guide or trying to go to next step (tapping Next or OK, etc)
-                        // If there is no next step in the guide, then the guide will be "complete" (and dismissed)
-                        // This provides an analytics update
                         contextualContainer.guidePayload.nextStep.onClick(v)
+                        contextualContainer.guidePayload.dismissGuide.onClick(v)
                         guideBlock.dismiss()
                     },
                     imageURL ?: ""
@@ -240,7 +214,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
 
