@@ -26,6 +26,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.contextu.al.BuildConfig
 import com.contextu.al.Contextual
+import com.contextu.al.carousel.CarouselComponent
 import com.contextu.al.confetti.ConfettiGuideBlocks
 import com.contextu.al.core.CtxEventObserver
 import com.contextu.al.fancyannouncement.FancyAnnouncementGuideBlocks
@@ -209,6 +210,51 @@ class MainActivity : AppCompatActivity() {
                                     //TODO implement go to screen action
                                 }
                             )
+                        }
+                    }
+                }
+            }
+        }
+        launchBarcode()
+        launchCarousel()
+    }
+
+    fun launchBarcode() {
+
+        val barCodeScanner = "BarCodeScanner"
+        Contextual.registerGuideBlock(barCodeScanner).observe(this) { contextualContainer ->
+            if (contextualContainer.guidePayload.guide.guideBlock.contentEquals(barCodeScanner)) {
+                BarcodeScannerGuideBlock(
+                    (this)
+                ) { barcodeResult ->
+
+                }.also {
+                    it.showGuideBlock(contextualContainer)
+                }
+            }
+        }
+    }
+
+    fun launchCarousel() {
+        val carousel = "Carousel"
+        Contextual.registerGuideBlock(carousel).observe(this) { contextualContainer ->
+            if (contextualContainer.guidePayload.guide.guideBlock.contentEquals(carousel)) {
+
+                mBinding.carouselView.apply {
+                    setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                    setContent {
+                        MaterialTheme {
+                            CarouselComponent(contextualContainer = contextualContainer) {
+                                when (it) {
+                                    is CarouselAction.OnSkip -> {
+
+                                    }
+
+                                    is CarouselAction.OnButtonClick -> {
+
+                                    }
+                                }
+                            }
                         }
                     }
                 }
