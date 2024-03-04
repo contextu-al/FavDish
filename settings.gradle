@@ -1,4 +1,4 @@
 include ':app'
-include ':contextual'
-project(":contextual").projectDir = file("../contextual-sdk-android")
+//include ':contextual'
+//project(":contextual").projectDir = file("../contextual-sdk-android")
 rootProject.name = "FavDish"
