@@ -23,7 +23,7 @@ android {
         targetSdk = 34
         versionCode 3
         versionName "1.0.0"
-        manifestPlaceholders += [app_key: "shahzaib_Testb32aab2"]
+        manifestPlaceholders += [app_key: "FavDish"]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -61,7 +61,7 @@ android {
         continuousIntegration {
             flavorDimensions "ci"
 //            resValue "string", "app_key", "FavDish"
-            resValue "string", "app_key", "shahzaib_Testb32aab2"
+            resValue "string", "app_key", "FavDish"
         }
         localDev {
             flavorDimensions "dev"
