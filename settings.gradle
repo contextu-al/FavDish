@@ -1,4 +1,9 @@
 include ':app'
 //include ':contextual'
 //project(":contextual").projectDir = file("../contextual-sdk-android")
+//
+//include ':Android-GuideBlocks'
+//project(":Android-GuideBlocks").projectDir = file("/Users/shahzaibali778/AndroidStudioProjects/Android-GuideBlocks/app")
+
+
 rootProject.name = "FavDish"
