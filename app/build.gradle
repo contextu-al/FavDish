@@ -60,8 +60,8 @@ android {
     productFlavors {
         continuousIntegration {
             flavorDimensions "ci"
-//            resValue "string", "app_key", "FavDish"
             resValue "string", "app_key", "FavDish"
+//            resValue "string", "app_key", "shahzaib_Testb32aab2"
         }
         localDev {
             flavorDimensions "dev"
@@ -94,10 +94,17 @@ dependencies {
         }
     } else if(getCurrentFlavor().contains("continuousIntegration")) {
         // This is used by CI(dev and staging)
+//
         implementation(group: "com.contextu.al.dev", name: "contextual", version: getContextualSdkVersion()) {
             exclude group: 'com.github.bumptech.glide'
             exclude group: 'androidx.room'
         }
+
+//        implementation project(":contextual"),  {
+//            exclude group: 'com.github.bumptech.glide'
+//            exclude group: 'androidx.room'
+//        }
+
     } else {
         // This is used by prod
         implementation(group: "com.contextu.al", name: "contextual", version: getContextualSdkVersion()) {
@@ -107,19 +114,29 @@ dependencies {
     }
 
 
-
     //Android-GuideBlocks
     if (getCurrentFlavor().contains("continuousIntegration")) {
         // This is used by CI(dev and staging)
         implementation 'com.github.GuideBlocks-org:Android-GuideBlocks:develop-SNAPSHOT', {
             exclude group: 'com.google.android.material'
             exclude group: 'com.github.bumptech.glide'
+            exclude group: 'com.contextu.al'
         }
+
+
+//    implementation project(":Android-GuideBlocks"), {
+//        exclude group: 'com.google.android.material'
+//        exclude group: 'com.github.bumptech.glide'
+//        exclude group: 'com.contextu.al'
+//    }
+
+
     } else {
         // This is used by prod
         implementation 'com.github.GuideBlocks-org:Android-GuideBlocks:0.0.17', {
             exclude group: 'com.google.android.material'
             exclude group: 'com.github.bumptech.glide'
+            exclude group: 'com.contextu.al'
         }
     }
 
@@ -171,9 +188,9 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxjava:3.0.4'
 
     // Kotlin + coroutines
-    def work_version = "2.7.1"
+    def work_version = "2.9.0"
     implementation "androidx.work:work-runtime-ktx:$work_version"
-
+    implementation("androidx.work:work-runtime:$work_version")
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

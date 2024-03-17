@@ -33,11 +33,10 @@ import com.contextu.al.carousel.CarouselAction
 import com.contextu.al.carousel.CarouselComponent
 import com.contextu.al.confetti.ConfettiGuideBlocks
 import com.contextu.al.core.CtxEventObserver
+import com.contextu.al.customtip.CustomGBTip
 import com.contextu.al.fancyannouncement.FancyAnnouncementGuideBlocks
 import com.contextu.al.model.customguide.Feedback
-import com.contextu.al.model.ui.Image
 import com.contextu.al.mychecklist.MyCheckListGuideBlocks
-import com.contextu.al.openchecklist.OpenChecklist
 import com.contextu.al.quizgatekeeper.QuizGatekeeperGuideBlock
 import com.contextu.al.ratingbar.NPSRatingBarGuideBlock
 import com.google.gson.Gson
@@ -64,25 +63,41 @@ class MainActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
 
-        Contextual.init(application, getString(R.string.app_key), object : CtxEventObserver
-        {
-            override fun onInstallRegistered(installId: UUID, context: Context)
-            {
-                val localDateTime = LocalDateTime.now()
-                val dayOfWeek = localDateTime.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
-                val month = localDateTime.month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
-                Contextual.tagStringArray(
-                    mutableMapOf(
-                        "sh_cuid" to "favdish-dev-user ${dayOfWeek + " " + " " + month + " " + localDateTime.dayOfMonth} | pz-${BuildConfig.CTX_VERSION_NAME}", "sh_email" to "qa@contextu.al", "sh_first_name" to "QA", "sh_last_name" to "Contextual"
-                    )
-                )
-            }
+        Contextual.init(
+                application,
+                getString(R.string.app_key),
+                object : CtxEventObserver
+                {
+                    override fun onInstallRegistered(installId: UUID, context: Context)
+                    {
+                        val localDateTime = LocalDateTime.now()
+                        val dayOfWeek = localDateTime.dayOfWeek.getDisplayName(
+                                TextStyle.SHORT,
+                                Locale.getDefault()
+                        )
+                        val month = localDateTime.month.getDisplayName(
+                                TextStyle.SHORT,
+                                Locale.getDefault()
+                        )
+                        Contextual.tagStringArray(
+                                mutableMapOf(
+                                        "sh_cuid" to "favdish-dev-user ${dayOfWeek + " " + " " + month + " " + localDateTime.dayOfMonth} | pz-${BuildConfig.CTX_VERSION_NAME}",
+                                        "sh_email" to "qa@contextu.al",
+                                        "sh_first_name" to "QA",
+                                        "sh_last_name" to "Contextual"
+                                )
+                        )
+                    }
 
-            override fun onInstallRegisterError(errorMsg: String)
-            {
-                Toast.makeText(application, errorMsg, Toast.LENGTH_LONG).show()
-            }
-        })
+                    override fun onInstallRegisterError(errorMsg: String)
+                    {
+                        Toast.makeText(
+                                application,
+                                errorMsg,
+                                Toast.LENGTH_LONG
+                        ).show()
+                    }
+                })
 
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -92,26 +107,43 @@ class MainActivity : AppCompatActivity()
         mNavController = findNavController(R.id.nav_host_fragment) // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_all_dishes, R.id.navigation_favorite_dishes, R.id.navigation_random_dish, R.id.navigation_maps
-            )
+                setOf(
+                        R.id.navigation_all_dishes,
+                        R.id.navigation_favorite_dishes,
+                        R.id.navigation_random_dish,
+                        R.id.navigation_maps
+                )
         )
-        setupActionBarWithNavController(mNavController, appBarConfiguration)
+        setupActionBarWithNavController(
+                mNavController,
+                appBarConfiguration
+        )
         mBinding.navView.setupWithNavController(mNavController)
 
         // TODO Step 19: Handle the Notification when user clicks on it.
         // START
         if (intent.hasExtra(Constants.NOTIFICATION_ID))
         {
-            val notificationId = intent.getIntExtra(Constants.NOTIFICATION_ID, 0)
-            Log.i("Notification Id", "$notificationId")
+            val notificationId = intent.getIntExtra(
+                    Constants.NOTIFICATION_ID,
+                    0
+            )
+            Log.i(
+                    "Notification Id",
+                    "$notificationId"
+            )
 
             // The Random Dish Fragment is selected when user is redirect in the app via Notification.
             mBinding.navView.selectedItemId = R.id.navigation_random_dish
         } // END
         startWork()
 
-        val checkedItems = booleanArrayOf(false, false, false, false)
+        val checkedItems = booleanArrayOf(
+                false,
+                false,
+                false,
+                false
+        )
         val multiSelectSurvey = "MultiSelectSurvey"
         var hasShown = false
         Contextual.registerGuideBlock(multiSelectSurvey).observe(this) { contextualContainer ->
@@ -119,12 +151,16 @@ class MainActivity : AppCompatActivity()
             {
                 hasShown = true
                 val feedBackData = Gson().fromJson(
-                    contextualContainer.guidePayload.guide.feedBackData, ContextualFeedbackModel::class.java
+                        contextualContainer.guidePayload.guide.feedBackData,
+                        ContextualFeedbackModel::class.java
                 )
                 val multiChoiceItems = feedBackData.c.toTypedArray()
                 AlertDialog.Builder(this@MainActivity)
                     .setTitle(contextualContainer.guidePayload.guide.feedBackTitle ?: "")
-                    .setMultiChoiceItems(multiChoiceItems, checkedItems) { dialog, which, isChecked ->
+                    .setMultiChoiceItems(
+                            multiChoiceItems,
+                            checkedItems
+                    ) { dialog, which, isChecked ->
                     }.setPositiveButton("Submit") { dialog, which ->
                         val jsonObject = JsonObject()
                         val updatedMultiChoice = arrayListOf<String>()
@@ -134,12 +170,17 @@ class MainActivity : AppCompatActivity()
                                 updatedMultiChoice.add(multiChoiceItems[index])
                             }
                         }
-                        jsonObject.addProperty("any-other-custom-data", "Example custom data")
+                        jsonObject.addProperty(
+                                "any-other-custom-data",
+                                "Example custom data"
+                        )
                         contextualContainer.operations.submitFeedback(
-                            contextualContainer.guidePayload.guide.feedID, Feedback(
-                                contextualContainer.guidePayload.guide.feedBackTitle
-                                    ?: "", updatedMultiChoice, jsonObject
-                            )
+                                contextualContainer.guidePayload.guide.feedID,
+                                Feedback(
+                                        contextualContainer.guidePayload.guide.feedBackTitle ?: "",
+                                        updatedMultiChoice,
+                                        jsonObject
+                                )
                         )
                         dialog.dismiss()
                         if (feedBackData.i == 1)
@@ -155,10 +196,12 @@ class MainActivity : AppCompatActivity()
             if (contextualContainer.guidePayload.guide.guideBlock.contentEquals(confettiGuideBlocks))
             {
                 val confettiView = ConfettiGuideBlocks(this@MainActivity)
-                confettiView.show({}, {
-                    val baseView = findViewById<View>(android.R.id.content)
-                    contextualContainer.guidePayload.nextStep.onClick(baseView)
-                })
+                confettiView.show(
+                        {},
+                        {
+                            val baseView = findViewById<View>(android.R.id.content)
+                            contextualContainer.guidePayload.nextStep.onClick(baseView)
+                        })
             }
         }
 
@@ -193,35 +236,43 @@ class MainActivity : AppCompatActivity()
 
                 val guideBlock = FancyAnnouncementGuideBlocks(this)
 
-                guideBlock.show(title, message, negativeText, { v: View? ->
-                    contextualContainer.guidePayload.prevStep.onClick(v)
-                    contextualContainer.guidePayload.dismissGuide.onClick(v)
-                    guideBlock.dismiss()
-                    contextualContainer.tagManager.setStringTag("test_key", "test_value")
-                }, positiveText, { v: View? ->
-                    contextualContainer.guidePayload.nextStep.onClick(v)
-                    contextualContainer.guidePayload.dismissGuide.onClick(v)
-                    guideBlock.dismiss()
-                }, imageURL ?: ""
+                guideBlock.show(title,
+                        message,
+                        negativeText,
+                        { v: View? ->
+                            contextualContainer.guidePayload.prevStep.onClick(v)
+                            contextualContainer.guidePayload.dismissGuide.onClick(v)
+                            guideBlock.dismiss()
+                            contextualContainer.tagManager.setStringTag(
+                                    "test_key",
+                                    "test_value"
+                            )
+                        },
+                        positiveText,
+                        { v: View? ->
+                            contextualContainer.guidePayload.nextStep.onClick(v)
+                            contextualContainer.guidePayload.dismissGuide.onClick(v)
+                            guideBlock.dismiss()
+                        },
+                        imageURL ?: ""
                 )
             }
-        }
-//
-//        val openChecklist = "OpenChecklist"
-//        Contextual.registerGuideBlock(openChecklist).observe(this) { contextualContainer ->
-//            if (contextualContainer.guidePayload.guide.guideBlock.contentEquals(openChecklist))
-//            {
-//                mBinding.composeView.apply {
-//                    setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-//                    setContent {
-//                        MaterialTheme {
-//                            OpenChecklist(contextualContainer = contextualContainer, deepLink = { deepLink -> //TODO implement go to screen action
-//                            })
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        } //
+        //        val openChecklist = "OpenChecklist"
+        //        Contextual.registerGuideBlock(openChecklist).observe(this) { contextualContainer ->
+        //            if (contextualContainer.guidePayload.guide.guideBlock.contentEquals(openChecklist))
+        //            {
+        //                mBinding.composeView.apply {
+        //                    setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+        //                    setContent {
+        //                        MaterialTheme {
+        //                            OpenChecklist(contextualContainer = contextualContainer, deepLink = { deepLink -> //TODO implement go to screen action
+        //                            })
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
 
         //UNCOMMENT WHAT YOU WANTS TO TEST GUIDE BLOCKS BY SHAHZAIB
         showExampleQuizGateKeeperGuideBlock()
@@ -229,7 +280,7 @@ class MainActivity : AppCompatActivity()
         showExampleCheckListGuideBlock()
 
 
-
+        showTestTipGuideBlock()
         launchBarcode()
         launchCarousel()
 
@@ -289,6 +340,7 @@ class MainActivity : AppCompatActivity()
 
         val guideName = "NPSRatingBar"
         Contextual.registerGuideBlock(guideName).observe(this) { contextualContainer ->
+            contextualContainer.operations
             if (contextualContainer.guidePayload.guide.guideBlock.contentEquals(guideName))
             {
                 val mComposeView: ComposeView = (mBinding.root.children.find { it.tag == "myComposeView" }
@@ -298,11 +350,14 @@ class MainActivity : AppCompatActivity()
                     setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
                     setContent {
                         MaterialTheme {
-                            NPSRatingBarGuideBlock().show(contextualContainer = contextualContainer, onCancel = {
+                            NPSRatingBarGuideBlock().show(
+                                    contextualContainer = contextualContainer,
+                                    onCancel = {
 
-                            }, onSubmit = {
+                                    },
+                                    onSubmit = {
 
-                            })
+                                    })
                         }
                     }
                 } //ADD VIEW ONLY IF ITS NOT ALREADY ADDED
@@ -313,6 +368,20 @@ class MainActivity : AppCompatActivity()
             }
         }
     }
+
+    private fun showTestTipGuideBlock()
+    {
+        Contextual.registerGuideBlock(CustomGBTip.GB_KEY).observe(this) { contextualContainer ->
+
+            if ( contextualContainer.guidePayload.guide.guideBlock.contentEquals(CustomGBTip.GB_KEY))
+            {
+                CustomGBTip(this@MainActivity,contextualContainer).showCustomTip()
+            }
+
+
+        }
+    }
+
 
     private fun showExampleCheckListGuideBlock()
     {
@@ -331,11 +400,13 @@ class MainActivity : AppCompatActivity()
                     setContent {
                         MaterialTheme {
                             MyCheckListGuideBlocks().show(
-                                deepLinkListener = { link ->
-                                    runCatching {
-                                        mNavController.navigate(Uri.parse(link))
-                                    }
-                                }, activity = this@MainActivity, contextualContainer = contextualContainer
+                                    deepLinkListener = { link ->
+                                        runCatching {
+                                            mNavController.navigate(Uri.parse(link))
+                                        }
+                                    },
+                                    activity = this@MainActivity,
+                                    contextualContainer = contextualContainer
                             )
                         }
                     }
@@ -363,7 +434,8 @@ class MainActivity : AppCompatActivity()
                     setContent {
                         MaterialTheme {
                             QuizGatekeeperGuideBlock().show(
-                                activity = this@MainActivity, mContextualContainer = contextualContainer
+                                    activity = this@MainActivity,
+                                    mContextualContainer = contextualContainer
                             ) { result ->
                                 mBinding.root.removeView(mComposeView)
                             }
@@ -390,7 +462,10 @@ class MainActivity : AppCompatActivity()
 
     override fun onSupportNavigateUp(): Boolean
     {
-        return NavigationUI.navigateUp(mNavController, null)
+        return NavigationUI.navigateUp(
+                mNavController,
+                null
+        )
     }
 
     /**
@@ -436,16 +511,19 @@ class MainActivity : AppCompatActivity()
      *
      * You can also set the TimeUnit as per your requirement. for example SECONDS, MINUTES, or HOURS.
      */ // setting period to 15 Minutes
-    private fun createWorkRequest() =
-        PeriodicWorkRequestBuilder<NotifyWorker>(15, TimeUnit.MINUTES).setConstraints(createConstraints())
-            .build()
+    private fun createWorkRequest() = PeriodicWorkRequestBuilder<NotifyWorker>(
+            15,
+            TimeUnit.MINUTES
+    ).setConstraints(createConstraints()).build()
 
     private fun startWork()
     {/* enqueue a work, ExistingPeriodicWorkPolicy.KEEP means that if this work already exists, it will be kept
         if the value is ExistingPeriodicWorkPolicy.REPLACE, then the work will be replaced */
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-                "FavDish Notify Work", ExistingPeriodicWorkPolicy.KEEP, createWorkRequest()
-            )
+                "FavDish Notify Work",
+                ExistingPeriodicWorkPolicy.KEEP,
+                createWorkRequest()
+        )
     }
 
     private fun requestDrawPermission()
@@ -454,8 +532,14 @@ class MainActivity : AppCompatActivity()
         {
             if (!Settings.canDrawOverlays(this))
             {
-                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName"))
-                startActivityForResult(intent, 12345)
+                val intent = Intent(
+                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:$packageName")
+                )
+                startActivityForResult(
+                        intent,
+                        12345
+                )
             }
         }
     }
